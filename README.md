@@ -32,6 +32,8 @@ o	Use Cases sollten spezifiziert werden
 - Verhalten im Normalfall/Fehlerfall
 - Nachbedingungen
 - Ergebnis
-o	Beziehungen zwischen Akteur und Use Cases
+o	Beziehungen zwischen Akteur und Use Cases+
+
+________________________
 
 ========
