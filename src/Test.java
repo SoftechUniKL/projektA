@@ -20,6 +20,11 @@ public class Test {
 	frame.setVisible(true);
 	// Rahmengröße setzen und sichtbar machen
 	
+	
+	
+	
+	
+	
 	}
 
 }
