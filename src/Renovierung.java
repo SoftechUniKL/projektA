@@ -145,6 +145,38 @@ public class Renovierung {
 	public void benötigte_farbe(double liter){
 		view2.setFarbmenge(liter);
 	}
-
+	
+	
+	/*	 Gesamtkosten = 
+	 * 			(	gesamt benötigte Farbe
+	 * 				* Preis/l Farbe
+	 * 				+ Abdeckungskosten
+	 * 				+ regionaler Stundenlohn * benötigte Zeit für die Streicharbeit   )
+	 * 				
+	 * 			* 1,1 (wenn Raucherwohnung)
+	 */
+	public void gesamtkosten(){
+		
+		endergebnis = 
+				(int)
+				(Double.parseDouble(view2.getbenötigtefarbe())
+				* Double.parseDouble(view2.getpreisproliter())
+				+ Double.parseDouble(view2.getabdeckungskosten())
+				+ Double.parseDouble(view2.getregionalerStundenlohn())
+				* (Double.parseDouble(view2.getzustreichendeFläche()) / arbeitsleistung));
+		
+		// 10 % Extra-Farbe
+		if(view2.raucher == true){
+			
+			endergebnis = 
+					(int)
+					(Double.parseDouble(view2.getbenötigtefarbe()) * 1.1
+					* Double.parseDouble(view2.getpreisproliter())
+					+ Double.parseDouble(view2.getabdeckungskosten())
+					+ Double.parseDouble(view2.getregionalerStundenlohn())
+					* (Double.parseDouble(view2.getzustreichendeFläche()) / arbeitsleistung));
+		}
+		view2.setEndergebnis(endergebnis);
+	}
 	
 }
