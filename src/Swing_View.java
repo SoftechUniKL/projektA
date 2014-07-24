@@ -3,6 +3,7 @@ package malerarbeit;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,195 +26,120 @@ import javax.swing.event.ListSelectionListener;
 
 public class Swing_View extends JFrame{
 
-
-
+	Renovierung r = new Renovierung(this);
+	Wohnung w = new Wohnung(this);
+	
+	
 	private static final long serialVersionUID = 1L;
-	private JLabel ueberschrift;
+	
+	private JLabel sonstiges;
 	private JButton kosten;
 
 
 	// Raum
-	private JTextField textfield_flaeche, berechne_raum1;
-	private JTextField textfield_hoehe, berechne_abdeckung;
-	private JLabel schriftzug_flaeche, schriftzug_hoehe, flaeche_raum1, raumangabe;
+	private JTextField tf_flaeche, tf_raumberechnung, tf_hoehe, tf_berechne_abdeckung;
+	private JLabel schriftzug_flaeche, schriftzug_hoehe, flaeche_raum1, wohnangaben;
 	private JRadioButton decke_streichen, decke_nichtstreichen;
-
-
+	
 	// Boden
 	private JLabel flaeche_abdeckung;
 	private JRadioButton folieButton, kreppapierButton, kartonButton;
-	double preis_folie = 0.5;
-	double preis_kreppapier = 0.7;
-	double preis_karton = 1.0;
-
+	
 	// Bundesland
 	private JComboBox bundeslandAuswahl;
-	private JLabel farbpanel_titel;
-	private JPanel farbe;
-	private JLabel schriftzug_stundenlohn;
-	private JTextField textfield_stundenlohn;
-	/*
-	 * Malerkosten:
-	 * http://malerundlackiererinfo.de/so-viel-gehalt-bekommen-maler-und-lackierer/
-	   (Annahme: 22 Arbeitstage/Monat)
-	 */
-	double Sachsen_Anhalt = 8.66;
-	double Saarland = 9.18;
-	double Brandenburg = 9.59;
-	double Niedersachsen = 10.02; 
-	double Thueringen = 10.04;
-	double Berlin = 10.09;
-	double Hamburg = 10.23;
-	double Mecklenburg_Vorpommern = 10.85;
-	double Sachsen = 11.36;
-	double Schleswig_Holstein = 11.36;
-	double Nordrhein_Westfalen = 11.58;
-	double Bayern = 11.72;
-	double Bremen = 12.10;
-	double Hessen = 12.15;
-	double Baden_Wuerttemberg = 12.80;
-	double Rheinland_Pfalz = 14.20;
-
+	private JLabel bundesland, schriftzug_stundenlohn;
+	private JPanel bundesland_panel;
+	private JTextField tf_stundenlohn;
+	
 	// Rauchen
 	private JRadioButton yes, no;
 	private JTextField raucherwohnung_folge;
-
+	
 	//Anzahl der Räume
 	private JList raum;
 	private final String zimmer[] = { "1 Zimmer", "2 Zimmer", "3 Zimmer", "4 Zimmer", 
 			"5 Zimmer", "6 Zimmer", "7 Zimmer", "8 Zimmer", "9 Zimmer"};
-
+	
 	//Farbe
 	private JRadioButton dispersionsfarbe, latex_seidenglanz, schadstofffarbe;
 	private JLabel farbpreis_proliter, benötigte_farbe;
-	private JTextField farbpreis_proliter_tf, benötigte_farbe_tf;
-
-	// Berechnung
-	double preis_dispersionsfarbe = 3.0; // jeweils pro Liter Farbe
-	double preis_latex_seidenglanz = 4.0;
-	double preis_schadstofffarbe = 5.0;
-	double deckkraft = 7.0; // Quadratmeter pro Liter (für alle Farben gleich)
-	double arbeitsleistung = 10.0; // Quadratmeter pro Stunde
-	double ergebnis;
+	private JTextField tf_farbpreis_proliter, tf_benötigte_farbe;
 
 
-	public Swing_View(Swing_Logic stl) {
+	public Swing_View() {
+		
 		super("Malerkosten");
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 
-		ueberschrift = new JLabel ("Sonstige Angaben:");
-		ueberschrift.setBounds(395,0,400,25);
-		getContentPane().add(ueberschrift);
-
+		allgemeines();
 		add_room();
-		radio_button();
+		abdeckung();
 		combo_box_bundesland();
 		raum_anzahl();
 		farbe();
 		raucherwohnung();
-
-		kosten_berechnen();
+		kosten();
 	}
 
 
+	public void allgemeines() {
+		
+		wohnangaben = new JLabel("Angaben zur Wohnfläche:");
+		wohnangaben.setBounds(0,0,400,25);
+		getContentPane().add(wohnangaben);
+		
+		sonstiges = new JLabel ("Sonstige Angaben:");
+		sonstiges.setBounds(395,0,400,25);
+		getContentPane().add(sonstiges);
+	}
+	
 
-	private void add_room() {
+	public void add_room() {
 
 		// Fenster intitialisieren
-		raumangabe = new JLabel("Angaben zur Wohnfläche:");
 		schriftzug_flaeche = new JLabel("(1) Wie groß ist die Wohnung?");
 		flaeche_raum1 = new JLabel("~ zu streichende Gesamtfläche der Wohnung (in m²):");
 		schriftzug_hoehe = new JLabel("(2) Durchschnittliche Deckenhöhe:");
-		textfield_flaeche = new JTextField("Angabe in m²");
-		textfield_hoehe = new JTextField("Angabe in m");
-		berechne_raum1 = new JTextField();
+		tf_flaeche = new JTextField("Angabe in m²");
+		tf_hoehe = new JTextField("Angabe in m");
+		tf_raumberechnung = new JTextField();
 
 		// Positionen festlegen
-		raumangabe.setBounds(0,0,400,25);
 		schriftzug_flaeche.setBounds(5,30,400,25);
-		textfield_flaeche.setBounds(5,50,100,25);
+		tf_flaeche.setBounds(5,50,100,25);
 		schriftzug_hoehe.setBounds(5,80,400,25);
-		textfield_hoehe.setBounds(5,100,100,25);
+		tf_hoehe.setBounds(5,100,100,25);
 		flaeche_raum1.setBounds(5,430,400,25);
-		berechne_raum1.setBounds(5,450,150,25);
+		tf_raumberechnung.setBounds(5,450,150,25);
 
 		// Elemente zum Fenster hinzufuegen
-		getContentPane().add(raumangabe);
 		getContentPane().add(schriftzug_flaeche);
 		getContentPane().add(schriftzug_hoehe);
-		getContentPane().add(textfield_flaeche);
-		getContentPane().add(textfield_hoehe);
+		getContentPane().add(tf_flaeche);
+		getContentPane().add(tf_hoehe);
 		getContentPane().add(flaeche_raum1);
-		getContentPane().add(berechne_raum1);
+		getContentPane().add(tf_raumberechnung);
 
-		// Decke
+		// Decke streichen?
 		decke_streichen = new JRadioButton("Ja", false);
 		decke_nichtstreichen = new JRadioButton("Nein", false);
 		ButtonGroup group = new ButtonGroup (); 
 		group.add(decke_streichen);
 		group.add(decke_nichtstreichen);
-
 		JPanel radioButton_panel = new JPanel();
 		radioButton_panel.setLayout(new GridLayout(1,2));
 		radioButton_panel.add(decke_streichen);
 		radioButton_panel.add(decke_nichtstreichen);
-
 		radioButton_panel.setBorder(BorderFactory.createTitledBorder(
 				BorderFactory.createEtchedBorder(), "(3) Soll die Decke gestrichen werden?"));
 		radioButton_panel.setBackground(Color.white);
+		radioButton_panel.setBounds(5,135,250,50);
 		getContentPane().add(radioButton_panel);
-		radioButton_panel.setBounds(5,140,250,50);
-
-		// Action Listener
-		/*
-		bestätigung_raum1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Annahme: Jeder Raum ist quadratisch
-				//if (fläche.getSource() == bestätigung_raum1) {
-				try {
-					double a = Double.parseDouble(textfield_flaeche.getText());
-					double b = Double.parseDouble(textfield_hoehe.getText());
-					// gesamte Fläche (ohne Decke)
-					int sum = (int) (4 * (Math.sqrt(a) * b)); // Abrunden
-					String sum2 = String.valueOf(sum);
-					berechne_raum1.setText(sum2);
-				}
-				catch(NumberFormatException ex) {
-					berechne_raum1.setText("Falsches Eingabeformat!");
-				}
-			}
-		});
-		 */
-
-
-		/*
-		// Problem hier: mehrfaches Anklicken addiert immer wieder die Raumfläche dazu!!
-		decke_streichen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent streichen) {
-				double a = Double.parseDouble(textfield_flaeche.getText());
-				double zwischenwert;
-				double gesamt;
-				try{
-					if(decke_streichen.isSelected()) {
-						zwischenwert = Double.parseDouble(berechne_raum1.getText());
-						gesamt = zwischenwert + a;
-						berechne_raum1.setText(String.valueOf(gesamt));
-
-					}
-				} catch (NumberFormatException format){
-						berechne_raum1.setText("Es fehlen noch Angaben");
-				}
-			}
-		});
-		 */
-
-
 	}
+	
 
-
-
-	private void radio_button() {
+	private void abdeckung() {
 
 		folieButton = new JRadioButton("Folie (0,50€/m²)", false);
 		kreppapierButton = new JRadioButton("Kreppapier (0,70€/m²)", false);
@@ -235,58 +161,54 @@ public class Swing_View extends JFrame{
 		getContentPane().add(radioButton_panel);
 		radioButton_panel.setBounds(400,30,190,80);
 
-		// Ergebnis Ausgabe
+		// Kosten für Abdeckung:
 		flaeche_abdeckung = new JLabel("Kosten für Abdeckung");
-		berechne_abdeckung = new JTextField();
+		tf_berechne_abdeckung = new JTextField();
 		flaeche_abdeckung.setBounds(670,20,400,25);
-		berechne_abdeckung.setBounds(670,50,120,25);
+		tf_berechne_abdeckung.setBounds(670,50,120,25);
 
 		getContentPane().add(flaeche_abdeckung);
-		getContentPane().add(berechne_abdeckung);	
+		getContentPane().add(tf_berechne_abdeckung);	
 
+		
 		folieButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent folie) {
 				try{
-					double squaremeter = Double.parseDouble(textfield_flaeche.getText());
-					if(folieButton.isSelected()) {
-						double preis_1 = preis_folie * squaremeter;
-						String s1 = String.valueOf(preis_1);
-						berechne_abdeckung.setText(s1);
-					}
+					if(folieButton.isSelected()){
+						r.setMaterialkosten(0.5);
+						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+						r.abzudeckende_fläche();
+					}	
 				} catch (NumberFormatException fol){
-					berechne_abdeckung.setText("Falsches Eingabeformat!");
+					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
 				}
 			}
 		});
-
+		
 		kreppapierButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent kreppapier) {
-				try {
-					double squaremeter = Double.parseDouble(textfield_flaeche.getText());
-
-					if (kreppapierButton.isSelected()){
-						double preis_2 = preis_kreppapier * squaremeter;
-						String s2 = String.valueOf(preis_2);
-						berechne_abdeckung.setText(s2);
-					}
-				}catch(NumberFormatException krep){
-					berechne_abdeckung.setText("Falsches Eingabeformat!");
+				try{
+					if(kreppapierButton.isSelected()){
+						r.setMaterialkosten(0.7);
+						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+						r.abzudeckende_fläche();
+					}	
+				} catch (NumberFormatException krep){
+					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
 				}
 			}
 		});
-
+		
 		kartonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent karton) {
-				try {
-					double squaremeter = Double.parseDouble(textfield_flaeche.getText());
-
-					if (kartonButton.isSelected()){
-						double preis_3 = preis_karton * squaremeter;
-						String s3 = String.valueOf(preis_3);
-						berechne_abdeckung.setText(s3);
-					}
-				} catch (NumberFormatException kart){
-					berechne_abdeckung.setText("Falsches Eingabeformat!");
+				try{
+					if(kartonButton.isSelected()){
+						r.setMaterialkosten(1.0);
+						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+						r.abzudeckende_fläche();
+					}	
+				} catch (NumberFormatException kar){
+					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
 				}
 			}
 		});
@@ -297,12 +219,12 @@ public class Swing_View extends JFrame{
 
 	private void combo_box_bundesland() {
 
-		farbe = new JPanel();
-		farbpanel_titel = new JLabel("(6) Aus welchem Bundesland kommen Sie?");
-		farbe.add(farbpanel_titel);
+		bundesland_panel = new JPanel();
+		bundesland = new JLabel("(6) Aus welchem Bundesland kommen Sie?");
+		bundesland_panel.add(bundesland);
 
 		// Array für unsere JComboBox
-		String comboBoxListe[] = {"Baden-Württemberg", "Bayern",
+		String comboBoxListe[] = {"-Bitte wählen-", "Baden-Württemberg", "Bayern",
 				"Berlin", "Brandenburg", "Bremen",
 				"Hamburg", "Hessen", "Mecklenburg-Vorpommern",
 				"Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
@@ -313,60 +235,28 @@ public class Swing_View extends JFrame{
 		bundeslandAuswahl = new JComboBox(comboBoxListe);
 
 		//JComboBox wird Panel hinzugefügt
-		farbe.add(bundeslandAuswahl);
-		getContentPane().add(farbe);
-		farbe.setBounds(400,110,250,60);
+		bundesland_panel.add(bundeslandAuswahl);
+		getContentPane().add(bundesland_panel);
+		bundesland_panel.setBounds(400,110,250,60);
 
-		// Stundenlohn (View)
+		// Stundenlohn
 		schriftzug_stundenlohn = new JLabel("regionaler Stundenlohn:");
-		textfield_stundenlohn = new JTextField("12.8");
+		tf_stundenlohn = new JTextField();
 		schriftzug_stundenlohn.setBounds(670,110,400,25);
-		textfield_stundenlohn.setBounds(670,140,120,25);
+		tf_stundenlohn.setBounds(670,140,120,25);
 		getContentPane().add(schriftzug_stundenlohn);
-		getContentPane().add(textfield_stundenlohn);
+		getContentPane().add(tf_stundenlohn);
 
+		
+		
 		// Action Listener Stundenlohn
 		bundeslandAuswahl.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				switch (bundeslandAuswahl.getSelectedIndex()) {
-
-				case 0:		textfield_stundenlohn.setText(String.valueOf(Baden_Wuerttemberg));
-				break;
-				case 1:		textfield_stundenlohn.setText(String.valueOf(Bayern));
-				break;
-				case 2:		textfield_stundenlohn.setText(String.valueOf(Berlin));
-				break;
-				case 3:		textfield_stundenlohn.setText(String.valueOf(Brandenburg));
-				break;
-				case 4:		textfield_stundenlohn.setText(String.valueOf(Bremen));
-				break;
-				case 5:		textfield_stundenlohn.setText(String.valueOf(Hamburg));
-				break;
-				case 6:		textfield_stundenlohn.setText(String.valueOf(Hessen));
-				break;
-				case 7:		textfield_stundenlohn.setText(String.valueOf(Mecklenburg_Vorpommern));
-				break;
-				case 8:		textfield_stundenlohn.setText(String.valueOf(Niedersachsen));
-				break;
-				case 9:		textfield_stundenlohn.setText(String.valueOf(Nordrhein_Westfalen));
-				break;
-				case 10:	textfield_stundenlohn.setText(String.valueOf(Rheinland_Pfalz));
-				break;
-				case 11:	textfield_stundenlohn.setText(String.valueOf(Saarland));
-				break;
-				case 12:	textfield_stundenlohn.setText(String.valueOf(Sachsen));
-				break;
-				case 13:	textfield_stundenlohn.setText(String.valueOf(Sachsen_Anhalt));
-				break;
-				case 14:	textfield_stundenlohn.setText(String.valueOf(Schleswig_Holstein));
-				break;
-				case 15:	textfield_stundenlohn.setText(String.valueOf(Thueringen));
-				break;
-				default:    textfield_stundenlohn.setText("Fehler");
-				}
+			public void actionPerformed(ActionEvent bund) {
+				r.stundenlohn_bundesland();
 			}
 		});	
+
+
 
 	}
 
@@ -404,56 +294,36 @@ public class Swing_View extends JFrame{
 		getContentPane().add(benötigte_farbe);
 		farbpreis_proliter.setBounds(400,430,180,25);
 		benötigte_farbe.setBounds(580,430,170,25);
-		farbpreis_proliter_tf = new JTextField();
-		benötigte_farbe_tf = new JTextField();
-		getContentPane().add(farbpreis_proliter_tf);
-		getContentPane().add(benötigte_farbe_tf);
-		farbpreis_proliter_tf.setBounds(400,450,150,25);
-		benötigte_farbe_tf.setBounds(580,450,150,25);
+		tf_farbpreis_proliter = new JTextField();
+		tf_benötigte_farbe = new JTextField();
+		getContentPane().add(tf_farbpreis_proliter);
+		getContentPane().add(tf_benötigte_farbe);
+		tf_farbpreis_proliter.setBounds(400,450,150,25);
+		tf_benötigte_farbe.setBounds(580,450,150,25);
 
+
+		
 
 		dispersionsfarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
-				try{
-					double d = Math.round(Double.parseDouble(berechne_raum1.getText())/7.0);
-					farbpreis_proliter_tf.setText(String.valueOf(preis_dispersionsfarbe));
-					benötigte_farbe_tf.setText(String.valueOf(d));
-				} catch (NumberFormatException d) {
-					farbpreis_proliter_tf.setText("Angaben fehlerhaft");
-					benötigte_farbe_tf.setText("Angaben fehlerhaft");
-				}
+				r.dispersionsfarbe();
+				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
 			}
 		});
-
 		latex_seidenglanz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent latex) {
-				try{
-					double l = Math.round(Double.parseDouble(berechne_raum1.getText())/7.0);
-					farbpreis_proliter_tf.setText(String.valueOf(preis_latex_seidenglanz));
-					benötigte_farbe_tf.setText(String.valueOf(l));
-				} catch (NumberFormatException l) {
-					farbpreis_proliter_tf.setText("Angaben fehlerhaft");
-					benötigte_farbe_tf.setText("Angaben fehlerhaft");
-				}
+			public void actionPerformed(ActionEvent dispersion) {
+				r.latexfarbe();
+				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
 			}
 		});
-
 		schadstofffarbe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent schadstoff) {
-				try {
-					double s = Math.round(Double.parseDouble(berechne_raum1.getText())/7.0);
-					farbpreis_proliter_tf.setText(String.valueOf(preis_schadstofffarbe));
-					benötigte_farbe_tf.setText(String.valueOf(s));
-				} catch (NumberFormatException s) {
-					farbpreis_proliter_tf.setText("Angaben fehlerhaft");
-					benötigte_farbe_tf.setText("Angaben fehlerhaft");
-				}
+			public void actionPerformed(ActionEvent dispersion) {
+				r.schadstofffarbe();
+				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
 			}
 		});
-
 
 	}
-
 
 	private void raucherwohnung() {
 
@@ -474,11 +344,12 @@ public class Swing_View extends JFrame{
 		getContentPane().add(radioButton_panel);
 		radioButton_panel.setBounds(950,20,250,50);
 
-		// Was macht das für einen Unterschied für uns?
+		// Was macht das für einen Unterschied, ob geraucht wird oder nicht?
 		raucherwohnung_folge = new JTextField();
 		raucherwohnung_folge.setBounds(950,75,250,25);
 		getContentPane().add(raucherwohnung_folge);
 
+		
 		// Action Listener
 		yes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent rauchen) {
@@ -491,6 +362,8 @@ public class Swing_View extends JFrame{
 				raucherwohnung_folge.setText("Keine zusätzliche Menge Farbe nötig!");
 			}
 		});
+		
+		
 
 	}
 
@@ -512,107 +385,34 @@ public class Swing_View extends JFrame{
 		r.setBounds(5,200,190,200);
 
 
-		// Annahme: Jeder Raum gleich groß und quadratisch
-		// gesamt zu streichende Fläche = sqrt[Gesamtgröße/anzahl_räume] * höhe * 4 * anzahl_räume
-
+		// Annahme: Jeder Raum gleich groß und quadratisch	
 		raum.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent k) {
 
-				double gesamtflaeche;
-				double gesamtflaeche_neu;
 				String str = (String) raum.getSelectedValue();
-
-				if (str.equals("1 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 1)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 1;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
+				for (int i = 1; i < 10; i++) {
+					try{
+						if(str.equals(i + " Zimmer")){
+							w.setAnzahlRäume(i);
+							w.setHöhe(Double.parseDouble(tf_hoehe.getText()));
+							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
+							w.zu_streichende_fläche();
+							if(decke_streichen.isSelected()){
+								w.addDeckenfläche();
+							}
+						}
+					}catch(NumberFormatException raum){
+						tf_raumberechnung.setText("Falsche/Fehlende Angabe");
 					}
 				}
-				if (str.equals("2 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 2)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 2;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("3 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 3)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 3;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("4 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 4)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 4;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("5 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 5)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 5;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("6 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 6)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 6;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("7 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 7)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 7;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("8 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 8)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 8;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-				if (str.equals("9 Zimmer")){
-					gesamtflaeche = Math.sqrt(Double.parseDouble(textfield_flaeche.getText()) / 9)
-							* Double.parseDouble(textfield_hoehe.getText()) * 4 * 9;
-					berechne_raum1.setText(String.valueOf(gesamtflaeche));
-					if (decke_streichen.isSelected()) {
-						gesamtflaeche_neu = gesamtflaeche + 100.0;
-						berechne_raum1.setText(String.valueOf(gesamtflaeche_neu));
-					}
-				}
-
 			}	
 		}); 
-
-
-
+		
+		
 	}
 
 
-	void kosten_berechnen (){
+	void kosten(){
 
 		kosten = new JButton("(9) Gesamtkosten berechnen");
 		kosten.setBounds(5,600,200,25);
@@ -638,24 +438,25 @@ public class Swing_View extends JFrame{
 		 * 
 		 */
 
+		/*
 		kosten.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent gesamt_kosten) {
 				try {
 					if(yes.isSelected()){
-						ergebnis = Math.round( Double.parseDouble(benötigte_farbe_tf.getText())
-								* Double.parseDouble(farbpreis_proliter_tf.getText())
-								+ Double.parseDouble(berechne_abdeckung.getText())
-								+ (		Double.parseDouble(textfield_stundenlohn.getText()) 
-										* (Double.parseDouble(berechne_raum1.getText())	/ arbeitsleistung)		) *1.1
+						ergebnis = Math.round( Double.parseDouble(tf_benötigte_farbe.getText())
+								* Double.parseDouble(tf_farbpreis_proliter.getText())
+								+ Double.parseDouble(tf_berechne_abdeckung.getText())
+								+ (		Double.parseDouble(tf_stundenlohn.getText()) 
+										* (Double.parseDouble(tf_raumberechnung.getText())	/ arbeitsleistung)		) *1.1
 								);
 						gesamt.setText(String.valueOf(ergebnis));
 					}
 					else{
-						ergebnis = Math.round( Double.parseDouble(benötigte_farbe_tf.getText())
-								* Double.parseDouble(farbpreis_proliter_tf.getText())
-								+ Double.parseDouble(berechne_abdeckung.getText())
-								+ (		Double.parseDouble(textfield_stundenlohn.getText()) 
-										* (Double.parseDouble(berechne_raum1.getText())	/ arbeitsleistung)		)
+						ergebnis = Math.round( Double.parseDouble(tf_benötigte_farbe.getText())
+								* Double.parseDouble(tf_farbpreis_proliter.getText())
+								+ Double.parseDouble(tf_berechne_abdeckung.getText())
+								+ (		Double.parseDouble(tf_stundenlohn.getText()) 
+										* (Double.parseDouble(tf_raumberechnung.getText())	/ arbeitsleistung)		)
 								);
 						gesamt.setText(String.valueOf(ergebnis));
 					}
@@ -666,7 +467,48 @@ public class Swing_View extends JFrame{
 
 			}
 		});
-
+		
+		
+*/
 	}
+
+	public void setZuStreichendeFläche(double gesamtfläche){
+		tf_raumberechnung.setText(Double.toString(gesamtfläche));
+	}
+	
+	public void setKostenFürAbdeckung(double abdeckungskosten){
+		tf_berechne_abdeckung.setText(Double.toString(abdeckungskosten));
+	}
+	
+	public String getSquaremeter(){
+		return tf_flaeche.getText();
+	}
+
+
+	public void set_tf_Stundenlohn(double stundenlohn) {
+		try{
+		tf_stundenlohn.setText(Double.toString(stundenlohn));
+		} catch (NumberFormatException lohn){
+			tf_stundenlohn.setText("Fehler");
+		}
+	}
+	
+	public int bundesland(){
+		return bundeslandAuswahl.getSelectedIndex();
+	}
+
+
+	public void setFarbpreis(double preis_dispersionsfarbe) {
+		tf_farbpreis_proliter.setText(Double.toString(preis_dispersionsfarbe));
+	}
+
+	public void setFarbmenge(double liter) {
+		tf_benötigte_farbe.setText(Double.toString(liter));
+	}
+	
+	public String getzustreichendeFläche(){
+		return tf_raumberechnung.getText();
+	}
+	
 }
 
