@@ -2,10 +2,10 @@ package malerarbeit;
 
 public class Wohnung {
 
-	int anzahl_räume;
-	double gesamtfläche; // zu streichende Fläche
-	double sqrmt; // Quadratmeter der Wohnung
-	double höhe; // Deckenhöhe
+	private int anzahl_räume;
+	private double gesamtfläche; // zu streichende Fläche
+	private double sqrmt; // Quadratmeter der Wohnung
+	private double höhe; // Deckenhöhe
 
 
 	// Objekte erzeugen
@@ -24,6 +24,10 @@ public class Wohnung {
 
 	public void setHöhe(double höhe){
 		this.höhe = höhe;
+	}
+	
+	public double getHöhe(){
+		return höhe;
 	}
 
 	public void setQuadratmeter(double sqrmt){
