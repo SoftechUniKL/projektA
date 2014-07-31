@@ -497,6 +497,9 @@ public class Swing_View extends JFrame{
 		return tf_flaeche.getText();
 	}
 
+	public Double getHöhe(){
+		return Double.parseDouble(tf_hoehe.getText());
+	}
 
 }
 
