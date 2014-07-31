@@ -23,7 +23,7 @@ public class Wohnung {
 
 
 	public void setHöhe(double höhe){
-		this.höhe = höhe;
+		this.höhe = höhe
 	}
 	
 	public double getHöhe(){
