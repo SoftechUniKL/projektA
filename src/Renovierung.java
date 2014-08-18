@@ -88,7 +88,7 @@ public class Renovierung {
 	}
 	
 	
-	public void abzudeckende_fläche(){
+	public void abdeckungskosten(){
 		abdeckungskosten = this.materialkosten_abdeckung * this.sqrmt;
 		view2.setKostenFürAbdeckung(abdeckungskosten);
 	}

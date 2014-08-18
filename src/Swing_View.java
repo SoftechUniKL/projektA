@@ -29,9 +29,12 @@ public class Swing_View extends JFrame{
 	Renovierung r = new Renovierung(this);
 	Wohnung w = new Wohnung(this);
 
-
 	private static final long serialVersionUID = 1L;
 
+	
+	/**
+	 * Test
+	 */
 	private JLabel sonstiges;
 	private JButton kosten;
 
@@ -68,9 +71,12 @@ public class Swing_View extends JFrame{
 	private JTextField gesamt;
 	boolean raucher;
 
+	
+	
 	public Swing_View() {
 
 		super("Malerkosten");
+		
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 
@@ -87,6 +93,9 @@ public class Swing_View extends JFrame{
 
 	public void allgemeines() {
 
+		/**
+		 * Wohnfläche angeben
+		*/
 		wohnangaben = new JLabel("Angaben zur Wohnfläche:");
 		wohnangaben.setBounds(0,0,400,25);
 		getContentPane().add(wohnangaben);
@@ -179,7 +188,7 @@ public class Swing_View extends JFrame{
 					if(folieButton.isSelected()){
 						r.setMaterialkosten(0.5);
 						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abzudeckende_fläche();
+						r.abdeckungskosten();
 					}	
 				} catch (NumberFormatException fol){
 					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
@@ -193,7 +202,7 @@ public class Swing_View extends JFrame{
 					if(kreppapierButton.isSelected()){
 						r.setMaterialkosten(0.7);
 						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abzudeckende_fläche();
+						r.abdeckungskosten();
 					}	
 				} catch (NumberFormatException krep){
 					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
@@ -207,7 +216,7 @@ public class Swing_View extends JFrame{
 					if(kartonButton.isSelected()){
 						r.setMaterialkosten(1.0);
 						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abzudeckende_fläche();
+						r.abdeckungskosten();
 					}	
 				} catch (NumberFormatException kar){
 					tf_berechne_abdeckung.setText("Falsches Eingabeformat!");
@@ -495,10 +504,6 @@ public class Swing_View extends JFrame{
 
 	public String getSquaremeter(){
 		return tf_flaeche.getText();
-	}
-
-	public Double getHöhe(){
-		return Double.parseDouble(tf_hoehe.getText());
 	}
 
 }

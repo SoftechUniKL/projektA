@@ -8,26 +8,29 @@ public class Wohnung {
 	double höhe; // Deckenhöhe
 
 
-	// Objekte erzeugen
+	// Objekt erzeugen
 	Swing_View view1;
-	Renovierung r2;
-
 
 
 	Wohnung (Swing_View view1){
 		this.view1 = view1;
 	}
-	Wohnung (Renovierung r2){
-		this.r2 = r2;
-	}
+
 
 
 	public void setHöhe(double höhe){
 		this.höhe = höhe;
 	}
+	
+	public Double getHöhe(){
+		return this.höhe;
+	}
 
 	public void setQuadratmeter(double sqrmt){
 		this.sqrmt = sqrmt;
+	}
+	public Double getQuadratmeter(){
+		return this.sqrmt;
 	}
 
 	public void setAnzahlRäume(int anzahl_räume){
