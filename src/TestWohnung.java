@@ -13,8 +13,8 @@ public class TestWohnung extends TestCase {
 	private Swing_View swing;
 	private Wohnung wohnung;
 	private double höhe;
-	private String fläche;
-	private String decke;
+	private double fläche;
+	private double decke;
 
 	protected void setUp() throws RemoteException {
 		swing = new Swing_View();
@@ -22,13 +22,13 @@ public class TestWohnung extends TestCase {
 		
 		höhe = 2.40;
 		
-		fläche = Double.toString(Math.sqrt(30.6/4.0) * 2.40 * 4.0 * 4.0);
+		fläche = (Math.sqrt(30.6/4.0) * 2.40 * 4.0 * 4.0);
 		wohnung.setHöhe(höhe);
 		wohnung.setAnzahlRäume(4);
 		wohnung.setQuadratmeter(30.6);
 		wohnung.zu_streichende_fläche();	
 		
-		decke = Double.toString(Double.parseDouble(fläche) + wohnung.getQuadratmeter());
+		decke = fläche + wohnung.getQuadratmeter();
 		
 	}
 
@@ -37,29 +37,30 @@ public class TestWohnung extends TestCase {
 		swing = null;
 		wohnung = null;
 		höhe = 0;
-		decke = null;
-		fläche = null;
+		decke = 0;
+		fläche = 0;
 	}
 
 	
+	// Asserts testen, ob eine Bedingung erfüllt ist, andernfalls wird der Test nicht bestanden
+	// assertEquals(expected value, real value)
+	
 	public void testsetHöhe() throws RemoteException {
 		setUp();
-		// Asserts testen, ob eine Bedingung erfüllt ist, andernfalls wird der Test nicht bestanden
-		// assertEquals(expected value, real value)
-		assertEquals(höhe, wohnung.getHöhe());
+		assertEquals(höhe, wohnung.getHöhe(), 0.001);
 		tearDown();	
 	}
 	
 	public void testzu_streichende_fläche() throws RemoteException {
 		setUp();	
-		assertEquals(swing.getzustreichendeFläche(), fläche);
+		assertEquals(Double.parseDouble(swing.getzustreichendeFläche()), fläche, 0.001);
 		tearDown();
 	}
 	
 	public void testaddDeckenfläche () throws RemoteException {
 		setUp();
 		wohnung.addDeckenfläche();
-		assertEquals(swing.getzustreichendeFläche(), decke);
+		assertEquals(Double.parseDouble(swing.getzustreichendeFläche()), decke, 0.001);
 		tearDown();
 	}
 }

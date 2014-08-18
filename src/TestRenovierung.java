@@ -8,7 +8,7 @@ public class TestRenovierung extends TestCase {
 	
 	private Swing_View swing;
 	private Renovierung renovierung;
-	private String abdeckungskosten;
+	private double abdeckungskosten;
 	
 	
 	protected void setUp() throws RemoteException {
@@ -18,13 +18,13 @@ public class TestRenovierung extends TestCase {
 		renovierung.setMaterialkosten(0.7); // zB Kreppapier
 		renovierung.setQuadratmeter(100);
 		renovierung.abdeckungskosten();
-		abdeckungskosten = Double.toString(100 * 0.7);
+		abdeckungskosten = (100 * 0.7);
 	}
 	
 	protected void tearDown() throws RemoteException {
 		swing = null;
 		renovierung = null;
-		abdeckungskosten = null;
+		abdeckungskosten = 0;
 	}
 	
 	public void testabdeckungskosten() throws RemoteException {
