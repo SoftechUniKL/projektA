@@ -8,5 +8,6 @@ public class Swing_Logic {
 		Swing_View Window = new Swing_View();
 		Window.setBounds(10, 10, 1300, 700);
 		Window.setVisible(true);
+
 	}	
 }

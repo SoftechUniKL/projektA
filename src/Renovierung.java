@@ -29,7 +29,7 @@ public class Renovierung {
 	final double preis_dispersionsfarbe = 4.0; // jeweils pro Liter Farbe
 	final double preis_latex_seidenglanz = 5.5;
 	final double preis_schadstofffarbe = 7.0;
-	final double deckkraft = 7.0; // Quadratmeter pro Liter (für alle Farben gleich)
+	final double deckkraft = 7.0; // VON DER FARBE ABHÄNGIG MACHEN!!!
 	final double arbeitsleistung = 10.0; // Quadratmeter pro Stunde
 	
 	double farbpreis;
@@ -178,5 +178,6 @@ public class Renovierung {
 		}
 		view2.setEndergebnis(endergebnis);
 	}
+
 	
 }

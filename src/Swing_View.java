@@ -41,7 +41,7 @@ public class Swing_View extends JFrame{
 
 	// Raum
 	private JTextField tf_flaeche, tf_raum, tf_hoehe, tf_abdeckungskosten;
-	private JLabel gesamtflaeche, hoehe, streichfläche, wohnangaben;
+	private JLabel gesamtflaeche, hoehe, streichflaeche, wohnangaben;
 	private JRadioButton decke_streichen, decke_nichtstreichen;
 
 	// Boden
@@ -65,8 +65,8 @@ public class Swing_View extends JFrame{
 
 	//Farbe
 	private JRadioButton dispersionsfarbe, latex_seidenglanz, schadstofffarbe;
-	private JLabel farbpreis_proliter, benötigte_farbe;
-	private JTextField tf_farbpreisproliter, tf_benötigtefarbe;
+	private JLabel farbpreis_proliter, benoetigte_farbe;
+	private JTextField tf_farbpreisproliter, tf_benoetigtefarbe;
 
 	private JTextField tf_gesamtkosten;
 	boolean raucher;
@@ -110,7 +110,7 @@ public class Swing_View extends JFrame{
 
 		// Fenster intitialisieren
 		gesamtflaeche = new JLabel("(1) Wie groß ist die Wohnung?");
-		streichfläche = new JLabel("~ zu streichende Gesamtfläche der Wohnung (in m²):");
+		streichflaeche = new JLabel("~ zu streichende Gesamtfläche der Wohnung (in m²):");
 		hoehe = new JLabel("(2) Durchschnittliche Deckenhöhe:");
 		tf_flaeche = new JTextField("Angabe in m²");
 		tf_hoehe = new JTextField("Angabe in m");
@@ -121,7 +121,7 @@ public class Swing_View extends JFrame{
 		tf_flaeche.setBounds(5,50,100,25);
 		hoehe.setBounds(5,80,400,25);
 		tf_hoehe.setBounds(5,100,100,25);
-		streichfläche.setBounds(5,430,400,25);
+		streichflaeche.setBounds(5,430,400,25);
 		tf_raum.setBounds(5,450,150,25);
 
 		// Elemente zum Fenster hinzufuegen
@@ -129,7 +129,7 @@ public class Swing_View extends JFrame{
 		getContentPane().add(hoehe);
 		getContentPane().add(tf_flaeche);
 		getContentPane().add(tf_hoehe);
-		getContentPane().add(streichfläche);
+		getContentPane().add(streichflaeche);
 		getContentPane().add(tf_raum);
 
 		// Decke streichen?
@@ -300,17 +300,17 @@ public class Swing_View extends JFrame{
 
 
 		farbpreis_proliter = new JLabel("Preis/l Farbe [€]:");
-		benötigte_farbe = new JLabel("Gesamt Benötigte Farbe [l]:");
+		benoetigte_farbe = new JLabel("Gesamt Benötigte Farbe [l]:");
 		getContentPane().add(farbpreis_proliter);
-		getContentPane().add(benötigte_farbe);
+		getContentPane().add(benoetigte_farbe);
 		farbpreis_proliter.setBounds(400,430,180,25);
-		benötigte_farbe.setBounds(580,430,170,25);
+		benoetigte_farbe.setBounds(580,430,170,25);
 		tf_farbpreisproliter = new JTextField();
-		tf_benötigtefarbe = new JTextField();
+		tf_benoetigtefarbe = new JTextField();
 		getContentPane().add(tf_farbpreisproliter);
-		getContentPane().add(tf_benötigtefarbe);
+		getContentPane().add(tf_benoetigtefarbe);
 		tf_farbpreisproliter.setBounds(400,450,150,25);
-		tf_benötigtefarbe.setBounds(580,450,150,25);
+		tf_benoetigtefarbe.setBounds(580,450,150,25);
 
 
 
@@ -403,12 +403,12 @@ public class Swing_View extends JFrame{
 				for (int i = 1; i < 10; i++) {
 					try{
 						if(str.equals(i + " Zimmer")){
-							w.setAnzahlRäume(i);
+							w.setAnzahlRaeume(i);
 							w.setHöhe(Double.parseDouble(tf_hoehe.getText()));
 							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
-							w.zu_streichende_fläche();
+							w.zu_streichende_flaeche();
 							if(decke_streichen.isSelected()){
-								w.addDeckenfläche();
+								w.addDeckenflaeche();
 							}
 						}
 					}catch(NumberFormatException raum){
@@ -464,18 +464,18 @@ public class Swing_View extends JFrame{
 			tf_stundenlohn.setText("Fehler");
 		}
 	}
-
+	
 	public int bundesland(){
 		return comboBox_bundesland.getSelectedIndex();
 	}
 
 
-	public void setFarbpreis(double preis_dispersionsfarbe) {
-		tf_farbpreisproliter.setText(Double.toString(preis_dispersionsfarbe));
+	public void setFarbpreis(double farbpreis) {
+		tf_farbpreisproliter.setText(Double.toString(farbpreis));
 	}
 
 	public void setFarbmenge(double liter) {
-		tf_benötigtefarbe.setText(Double.toString(liter));
+		tf_benoetigtefarbe.setText(Double.toString(liter));
 	}
 
 	public void setEndergebnis(double endergebnis) {
@@ -491,7 +491,7 @@ public class Swing_View extends JFrame{
 	}
 
 	public String getbenötigtefarbe(){
-		return tf_benötigtefarbe.getText();
+		return tf_benoetigtefarbe.getText();
 	}
 
 	public String getabdeckungskosten(){

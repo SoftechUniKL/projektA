@@ -19,6 +19,8 @@ public class TestRenovierung extends TestCase {
 		renovierung.setQuadratmeter(100);
 		renovierung.abdeckungskosten();
 		abdeckungskosten = (100 * 0.7);
+		
+		
 	}
 	
 	protected void tearDown() throws RemoteException {
@@ -29,7 +31,7 @@ public class TestRenovierung extends TestCase {
 	
 	public void testabdeckungskosten() throws RemoteException {
 		setUp();
-		assertEquals(abdeckungskosten, swing.getabdeckungskosten());
+		assertEquals(abdeckungskosten, Double.parseDouble(swing.getabdeckungskosten()), 0.001);
 		tearDown();	
 	}
 	

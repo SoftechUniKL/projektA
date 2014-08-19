@@ -2,10 +2,10 @@ package malerarbeit;
 
 public class Wohnung {
 
-	int anzahl_räume;
-	double gesamtfläche; // zu streichende Fläche
+	int anzahl_raeume;
+	double gesamtflaeche; // zu streichende Fläche
 	double sqrmt; // Quadratmeter der Wohnung
-	double höhe; // Deckenhöhe
+	double hoehe; // Deckenhöhe
 
 
 	// Objekt erzeugen
@@ -18,12 +18,12 @@ public class Wohnung {
 
 
 
-	public void setHöhe(double höhe){
-		this.höhe = höhe;
+	public void setHöhe(double hoehe){
+		this.hoehe = hoehe;
 	}
 	
-	public Double getHöhe(){
-		return this.höhe;
+	public Double getHoehe(){
+		return this.hoehe;
 	}
 
 	public void setQuadratmeter(double sqrmt){
@@ -33,26 +33,27 @@ public class Wohnung {
 		return this.sqrmt;
 	}
 
-	public void setAnzahlRäume(int anzahl_räume){
-		this.anzahl_räume = anzahl_räume;
+	public void setAnzahlRaeume(int anzahl_raeume){
+		this.anzahl_raeume = anzahl_raeume;
 	}
 
-	public double getFläche (double fläche){
-		return fläche;	
+	public double getFlaeche (double flaeche){
+		return flaeche;	
 	}
 
 
 	/*
 	 * Gesamtfläche = sqrt(Quadratmeter/AnzahlRäume)* Höhe * 4 * AnzahlRäume
 	 */
-	public void zu_streichende_fläche(){
-		gesamtfläche = Math.sqrt(this.sqrmt/this.anzahl_räume) * this.höhe * 4 * this.anzahl_räume;
-		view1.setZuStreichendeFläche(gesamtfläche);
+	public void zu_streichende_flaeche(){
+		gesamtflaeche = Math.sqrt(this.sqrmt/this.anzahl_raeume) * this.hoehe * 4 * this.anzahl_raeume;
+		view1.setZuStreichendeFläche(gesamtflaeche);
 	}
 
-	public void addDeckenfläche(){
-		gesamtfläche += this.sqrmt;
-		view1.setZuStreichendeFläche(gesamtfläche);
+	public void addDeckenflaeche(){
+		gesamtflaeche += this.sqrmt;
+		view1.setZuStreichendeFläche(gesamtflaeche);
 	}
+
 
 }
