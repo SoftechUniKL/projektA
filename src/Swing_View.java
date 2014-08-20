@@ -24,7 +24,7 @@ public class Swing_View extends JFrame{
 	Renovierung r = new Renovierung(this);
 	Wohnung w = new Wohnung(this);
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L; // Kompatibilität mit aktueller Version der Klasse
 
 	// Allgemeines
 	private JLabel sonstiges;
@@ -72,13 +72,13 @@ public class Swing_View extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 
 		allgemeines();
-		add_room();
+		raumHinzufuegen();
 		abdeckung();
-		combo_box_bundesland();
-		raum_anzahl();
+		bundesland();
+		anzahlRaeume();
 		farbe();
 		raucherwohnung();
-		kosten();
+		gesamtkosten();
 	}
 
 
@@ -95,7 +95,7 @@ public class Swing_View extends JFrame{
 	}
 
 
-	public void add_room() {
+	public void raumHinzufuegen() {
 
 		// Fenster intitialisieren
 		gesamtflaeche = new JLabel("(1) Wie groß ist die Wohnung?");
@@ -229,7 +229,7 @@ public class Swing_View extends JFrame{
 
 	}
 
-	private void combo_box_bundesland() {
+	private void bundesland() {
 
 		pnl_bundesland = new JPanel();
 		bundesland = new JLabel("(6) Aus welchem Bundesland kommen Sie?");
@@ -262,7 +262,7 @@ public class Swing_View extends JFrame{
 		// Action Listener Stundenlohn
 		comboBox_bundesland.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent bund) {
-				r.stundenlohn_bundesland();
+				r.stundenlohnBundesland();
 			}
 		});	
 
@@ -317,22 +317,22 @@ public class Swing_View extends JFrame{
 		dispersionsfarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.dispersionsfarbe();
-				r.benötigte_farbe(r.deckkraft_dispersionsfarbe);
-				r.deckkraft_dispersionsfarbe();
+				r.benoetigteFarbe(r.deckkraft_dispersionsfarbe);
+				r.deckkraftDispersionsfarbe();
 			}
 		});
 		latex_seidenglanz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.latexfarbe();
-				r.benötigte_farbe(r.deckkraft_seidenglanz);
-				r.deckkraft_seidenglanz();
+				r.benoetigteFarbe(r.deckkraft_seidenglanz);
+				r.deckkraftSeidenglanz();
 			}
 		});
 		schadstofffarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.schadstofffarbe();
-				r.benötigte_farbe(r.deckkraft_schadstofffarbe);
-				r.deckkraft_schadstofffarbe();
+				r.benoetigteFarbe(r.deckkraft_schadstofffarbe);
+				r.deckkraftSchadstofffarbe();
 			}
 		});
 
@@ -380,7 +380,7 @@ public class Swing_View extends JFrame{
 
 
 
-	void raum_anzahl(){
+	void anzahlRaeume(){
 
 		raum = new JList(zimmer);
 
@@ -407,7 +407,7 @@ public class Swing_View extends JFrame{
 							w.setAnzahlRaeume(i);
 							w.setHoehe(Double.parseDouble(tf_hoehe.getText()));
 							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
-							w.zu_streichende_flaeche();
+							w.zuStreichendeFläche();
 							if(decke_streichen.isSelected()){
 								w.addDeckenflaeche();
 							}
@@ -421,7 +421,7 @@ public class Swing_View extends JFrame{
 	}
 
 
-	void kosten(){
+	void gesamtkosten(){
 
 		kosten = new JButton("(9) Gesamtkosten berechnen");
 		kosten.setBounds(5,600,200,25);
@@ -452,32 +452,31 @@ public class Swing_View extends JFrame{
 	public void setZuStreichendeFlaeche(double gesamtflaeche){
 		tf_raum.setText(Double.toString(gesamtflaeche));
 	}
-	public String getzustreichendeFläche(){
+	public String getZuStreichendeFlaeche(){
 		return tf_raum.getText();
 	}
 	
 	
 
-	public void setKostenFuerAbdeckung(double abdeckungskosten){
+	public void setAbdeckungskosten(double abdeckungskosten){
 		tf_abdeckungskosten.setText(Double.toString(abdeckungskosten));
 	}
-	public String getabdeckungskosten(){
+	public String getAbdeckungskosten(){
 		return tf_abdeckungskosten.getText();
 	}
 	
 	
 
-	public int bundesland(){
+	public int getIndexBundesland(){
 		return comboBox_bundesland.getSelectedIndex();
 	}
-	public void set_tf_Stundenlohn(double stundenlohn) {
-		try{
-			tf_stundenlohn.setText(Double.toString(stundenlohn));
-		} catch (NumberFormatException lohn){
-			tf_stundenlohn.setText("Fehler");
+	public void setIndexBundesland (int a) {
+		comboBox_bundesland.setSelectedIndex(a);
 		}
+	public void setStundenlohn(double stundenlohn) {
+		tf_stundenlohn.setText(Double.toString(stundenlohn));
 	}
-	public String getregionalerStundenlohn(){
+	public String getStundenlohn(){
 		return tf_stundenlohn.getText();
 	}
 	
@@ -486,7 +485,7 @@ public class Swing_View extends JFrame{
 	public void setFarbpreis(double farbpreis) {
 		tf_farbpreisproliter.setText(Double.toString(farbpreis));
 	}
-	public String getpreisproliter(){
+	public String getPreisProLiter(){
 		return tf_farbpreisproliter.getText();
 	}
 
@@ -495,7 +494,7 @@ public class Swing_View extends JFrame{
 	public void setFarbmenge(double liter) {
 		tf_benoetigtefarbe.setText(Double.toString(liter));
 	}
-	public String getbenoetigtefarbe(){
+	public String getBenoetigteFarbe(){
 		return tf_benoetigtefarbe.getText();
 	}
 
@@ -503,10 +502,21 @@ public class Swing_View extends JFrame{
 	public void setEndergebnis(double endergebnis) {
 		tf_gesamtkosten.setText(Double.toString(endergebnis));
 	}
+	public int getEndergebnis() {
+		return (int) Double.parseDouble(tf_gesamtkosten.getText());
+	}
+	
 
 	public String getSquaremeter(){
 		return tf_flaeche.getText();
 	}
 
+	public void setRaucherFalse(){
+		raucher = false;
+	}
+	public void setRaucherTrue(){
+		raucher = true;
+	}
+	
 }
 

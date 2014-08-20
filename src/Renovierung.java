@@ -25,7 +25,7 @@ public class Renovierung {
 	final double deckkraft_dispersionsfarbe = 8.0;
 	final double deckkraft_seidenglanz = 7.0;
 	final double deckkraft_schadstofffarbe = 6.0;
-	final double arbeitsleistung = 10.0; // in m²/h
+	final double arbeitsleistung = 10.0; // in m² pro h
 	
 	double farbpreis;
 	double farbe;
@@ -53,50 +53,53 @@ public class Renovierung {
 	public void setFarbpreis(double farbpreis){
 		this.farbpreis = farbpreis;
 	}
+	public double getFarbpreis (){
+		return this.farbpreis;
+	}
 	
-	public void setBenoetigteFarbe(double benötigte_farbe){
-		this.benoetigte_farbe = benötigte_farbe;
+	public void setBenoetigteFarbe(double benoetigte_farbe){
+		this.benoetigte_farbe = benoetigte_farbe;
 	}
 	
 	public void setStundenlohn(double stundenlohn){
 		this.stundenlohn = stundenlohn;
 	}
 	
-	public void stundenlohn_bundesland(){
+	public void stundenlohnBundesland(){
 		
-		switch (view2.bundesland()) {
+		switch (view2.getIndexBundesland()) {
 
-		case 1:		view2.set_tf_Stundenlohn(Baden_Wuerttemberg);
+		case 1:		view2.setStundenlohn(Baden_Wuerttemberg);
 		break;
-		case 2:		view2.set_tf_Stundenlohn(Bayern); 
+		case 2:		view2.setStundenlohn(Bayern); 
 		break;
-		case 3:		view2.set_tf_Stundenlohn(Berlin);
+		case 3:		view2.setStundenlohn(Berlin);
 		break;
-		case 4:		view2.set_tf_Stundenlohn(Brandenburg);
+		case 4:		view2.setStundenlohn(Brandenburg);
 		break;
-		case 5:		view2.set_tf_Stundenlohn(Bremen);
+		case 5:		view2.setStundenlohn(Bremen);
 		break;
-		case 6:		view2.set_tf_Stundenlohn(Hamburg);
+		case 6:		view2.setStundenlohn(Hamburg);
 		break;
-		case 7:		view2.set_tf_Stundenlohn(Hessen);
+		case 7:		view2.setStundenlohn(Hessen);
 		break;
-		case 8:		view2.set_tf_Stundenlohn(Mecklenburg_Vorpommern);
+		case 8:		view2.setStundenlohn(Mecklenburg_Vorpommern);
 		break;
-		case 9:		view2.set_tf_Stundenlohn(Niedersachsen);
+		case 9:		view2.setStundenlohn(Niedersachsen);
 		break;
-		case 10:	view2.set_tf_Stundenlohn(Nordrhein_Westfalen);
+		case 10:	view2.setStundenlohn(Nordrhein_Westfalen);
 		break;
-		case 11:	view2.set_tf_Stundenlohn(Rheinland_Pfalz);
+		case 11:	view2.setStundenlohn(Rheinland_Pfalz);
 		break;
-		case 12:	view2.set_tf_Stundenlohn(Saarland);
+		case 12:	view2.setStundenlohn(Saarland);
 		break;
-		case 13:	view2.set_tf_Stundenlohn(Sachsen);
+		case 13:	view2.setStundenlohn(Sachsen);
 		break;
-		case 14:	view2.set_tf_Stundenlohn(Sachsen_Anhalt);
+		case 14:	view2.setStundenlohn(Sachsen_Anhalt);
 		break;
-		case 15:	view2.set_tf_Stundenlohn(Schleswig_Holstein);
+		case 15:	view2.setStundenlohn(Schleswig_Holstein);
 		break;
-		case 16:	view2.set_tf_Stundenlohn(Thueringen);
+		case 16:	view2.setStundenlohn(Thueringen);
 		break;
 		}
 	}
@@ -108,13 +111,13 @@ public class Renovierung {
 	public double getDeckkraft(){
 		return this.deckkraft;
 	}
-	public void deckkraft_dispersionsfarbe() {
+	public void deckkraftDispersionsfarbe() {
 		setDeckkraft(deckkraft_dispersionsfarbe);	
 	}
-	public void deckkraft_seidenglanz() {
+	public void deckkraftSeidenglanz() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
-	public void deckkraft_schadstofffarbe() {
+	public void deckkraftSchadstofffarbe() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
 	
@@ -125,7 +128,7 @@ public class Renovierung {
 	}
 	public void abdeckungskosten(){
 		abdeckungskosten = Math.round(100.0 * this.materialkosten_abdeckung * this.sqrmt) / 100.0;
-		view2.setKostenFuerAbdeckung(abdeckungskosten);
+		view2.setAbdeckungskosten(abdeckungskosten);
 	}
 	
 	
@@ -154,10 +157,9 @@ public class Renovierung {
 		view2.setFarbpreis(preis_schadstofffarbe);
 	}
 
-	
-	
-	public void benötigte_farbe(double deckkraft){
-		farbe = Math.round(100.0 * Double.parseDouble(view2.getzustreichendeFläche()) / deckkraft) / 100.0;
+
+	public void benoetigteFarbe(double deckkraft){
+		farbe = Math.round(100.0 * Double.parseDouble(view2.getZuStreichendeFlaeche()) / deckkraft) / 100.0;
 		view2.setFarbmenge(farbe);
 	}
 	
@@ -165,21 +167,21 @@ public class Renovierung {
 		
 		endergebnis = 
 				(int)
-				(Double.parseDouble(view2.getbenoetigtefarbe())
-				* Double.parseDouble(view2.getpreisproliter())
-				+ Double.parseDouble(view2.getabdeckungskosten())
-				+ Double.parseDouble(view2.getregionalerStundenlohn())
-				* (Double.parseDouble(view2.getzustreichendeFläche()) / arbeitsleistung));
+				(Double.parseDouble(view2.getBenoetigteFarbe())
+				* Double.parseDouble(view2.getPreisProLiter())
+				+ Double.parseDouble(view2.getAbdeckungskosten())
+				+ Double.parseDouble(view2.getStundenlohn())
+				* (Double.parseDouble(view2.getZuStreichendeFlaeche()) / arbeitsleistung));
 		
 		if(view2.raucher == true){
 			
 			endergebnis = 
 					(int)
-					(Double.parseDouble(view2.getbenoetigtefarbe()) * 1.1
-					* Double.parseDouble(view2.getpreisproliter())
-					+ Double.parseDouble(view2.getabdeckungskosten())
-					+ Double.parseDouble(view2.getregionalerStundenlohn())
-					* (Double.parseDouble(view2.getzustreichendeFläche()) / arbeitsleistung));
+					(Double.parseDouble(view2.getBenoetigteFarbe()) * 1.1
+					* Double.parseDouble(view2.getPreisProLiter())
+					+ Double.parseDouble(view2.getAbdeckungskosten())
+					+ Double.parseDouble(view2.getStundenlohn())
+					* (Double.parseDouble(view2.getZuStreichendeFlaeche()) / arbeitsleistung));
 		}
 		view2.setEndergebnis(endergebnis);
 	}

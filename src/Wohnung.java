@@ -36,7 +36,7 @@ public class Wohnung {
 	}
 
 
-	public void zu_streichende_flaeche(){
+	public void zuStreichendeFläche(){
 		zu_streichende_flaeche = Math.round(100.0 * (Math.sqrt(this.sqrmt/this.anzahl_raeume) * this.hoehe * 4 * this.anzahl_raeume)) / 100.0;
 		view1.setZuStreichendeFlaeche(zu_streichende_flaeche);
 	}

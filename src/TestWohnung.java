@@ -25,7 +25,7 @@ public class TestWohnung extends TestCase {
 		wohnung.setHoehe(hoehe);
 		wohnung.setAnzahlRaeume(4);
 		wohnung.setQuadratmeter(30.6);
-		wohnung.zu_streichende_flaeche();	
+		wohnung.zuStreichendeFläche();	
 		
 		decke = flaeche + wohnung.getQuadratmeter();
 		
@@ -50,14 +50,14 @@ public class TestWohnung extends TestCase {
 	
 	public void testzu_streichende_flaeche() throws RemoteException {
 		setUp();	
-		assertEquals(Double.parseDouble(swing.getzustreichendeFläche()), flaeche, 0.001);
+		assertEquals(Double.parseDouble(swing.getZuStreichendeFlaeche()), flaeche, 0.001);
 		tearDown();
 	}
 	
 	public void testaddDeckenflaeche () throws RemoteException {
 		setUp();
 		wohnung.addDeckenflaeche();
-		assertEquals(Double.parseDouble(swing.getzustreichendeFläche()), decke, 0.001);
+		assertEquals(Double.parseDouble(swing.getZuStreichendeFlaeche()), decke, 0.001);
 		tearDown();
 	}
 }
