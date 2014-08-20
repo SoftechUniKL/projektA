@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -40,7 +41,7 @@ public class Swing_View extends JFrame{
 	private JRadioButton folieButton, kreppapierButton, kartonButton;
 
 	// Bundesland
-	private JComboBox comboBox_bundesland;
+	private JComboBox<String> comboBox_bundesland;
 	private JLabel bundesland, stundenlohn;
 	private JPanel pnl_bundesland;
 	private JTextField tf_stundenlohn;
@@ -50,7 +51,7 @@ public class Swing_View extends JFrame{
 	private JTextField tf_rauchen;
 
 	//Anzahl der Räume
-	private JList raum;
+	private JList<String> raum;
 	private final String zimmer[] = { "1 Zimmer", "2 Zimmer", "3 Zimmer", "4 Zimmer", 
 			"5 Zimmer", "6 Zimmer", "7 Zimmer", "8 Zimmer", "9 Zimmer"};
 
@@ -60,7 +61,7 @@ public class Swing_View extends JFrame{
 	private JTextField tf_farbpreisproliter, tf_benoetigtefarbe;
 
 	private JTextField tf_gesamtkosten;
-	boolean raucher;
+	public boolean raucher;
 
 	
 	
@@ -244,7 +245,7 @@ public class Swing_View extends JFrame{
 				"Schleswig-Holstein", "Thüringen"};
 
 		//JComboBox mit Bundesländer-Einträgen wird erstellt
-		comboBox_bundesland = new JComboBox(bundesländer);
+		comboBox_bundesland = new JComboBox<String>(bundesländer);
 
 		//JComboBox wird Panel hinzugefügt
 		pnl_bundesland.add(comboBox_bundesland);
@@ -382,7 +383,7 @@ public class Swing_View extends JFrame{
 
 	void anzahlRaeume(){
 
-		raum = new JList(zimmer);
+		raum = new JList<String>(zimmer);
 
 		// nur eine Auswahl möglich
 		raum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -407,7 +408,7 @@ public class Swing_View extends JFrame{
 							w.setAnzahlRaeume(i);
 							w.setHoehe(Double.parseDouble(tf_hoehe.getText()));
 							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
-							w.zuStreichendeFläche();
+							w.zuStreichendeFlaeche();
 							if(decke_streichen.isSelected()){
 								w.addDeckenflaeche();
 							}
@@ -448,75 +449,152 @@ public class Swing_View extends JFrame{
 	}
 
 
-
+	/**
+	 * schreibt die gesamte zu streichende Fläche als String in das Textfeld <b> tf_raum </b>
+	 * @param gesamtflaeche = übergebener Wert für gesamt zu streichende Fläche
+	 * <p>
+	 * hängt ab von:
+	 * <ul>
+	 * <li> Quadratmeter
+	 * <li> Anzahl der Räume
+	 * <li> Höhe
+	 * <li> {@link Wohnung.zuStreichendeFlaeche}
+	 * <li> {@link Wohnung.addDeckenFlaeche}
+	 */
 	public void setZuStreichendeFlaeche(double gesamtflaeche){
 		tf_raum.setText(Double.toString(gesamtflaeche));
 	}
+	/**	
+	 * @return Ausgabe des Inhalts des Textfelds <b> tf_Raum </b>
+	 */
 	public String getZuStreichendeFlaeche(){
 		return tf_raum.getText();
 	}
 	
 	
-
+	/**
+	 * schreibt die Abdeckungskosten als String in das Textfeld <b> tf_abdeckungskosten </b>
+	 * @param abdeckungskosten = übergebene Gesamtkosten für die Abdeckung
+	 * <p>
+	 * hängt ab von:
+	 * <ul>
+	 * <li> Materialkosten 
+	 * <li> Fläche
+	 */
 	public void setAbdeckungskosten(double abdeckungskosten){
 		tf_abdeckungskosten.setText(Double.toString(abdeckungskosten));
 	}
+	
+	/**	
+	 * @return Ausgabe des Inhalts Textfelds <b> tf_abdeckungskosten </b>
+	 */
 	public String getAbdeckungskosten(){
 		return tf_abdeckungskosten.getText();
 	}
 	
 	
-
+	/**
+	 * @return Index des ausgewählten Elements der Combobox
+	 */
 	public int getIndexBundesland(){
 		return comboBox_bundesland.getSelectedIndex();
 	}
+	
+	/**
+	 * setzt den Index der ComboBox auf a
+	 * @param a = übergebener Index der Combobox
+	 */
 	public void setIndexBundesland (int a) {
 		comboBox_bundesland.setSelectedIndex(a);
-		}
+	}
+	
+	/**
+	 * schreibt den Studenlohn der Maler in das Textfeld <b> tf_stundenlohn </b>	
+	 * @param stundenlohn = Stundenlohn der Maler
+	 * <p>
+	 * hängt ab von {@link Renovierung.stundenlohnBundesland}
+	 */
 	public void setStundenlohn(double stundenlohn) {
 		tf_stundenlohn.setText(Double.toString(stundenlohn));
 	}
+	/**	
+	 * @return Ausgabe des Inhalts des Textfelds <b> tf_stundenlohn </b>
+	 */
 	public String getStundenlohn(){
 		return tf_stundenlohn.getText();
 	}
 	
 
-
+	/**
+	 * schreibt den Preis für 1l der jeweiligen Farbe in das Textfeld <b> tf_farbpreisproliter </b>
+	 * @param farbpreis = übergebener Literpreis der Farbe 
+	 * <p> </p> <ul>
+	 * <li>Dispersionsfarbe 4€/l
+	 * <li> Latexseidenglanz 5,5€/l
+	 * <li> Schadstofffarbe 7€/l
+	 * </ul>
+	 */
 	public void setFarbpreis(double farbpreis) {
 		tf_farbpreisproliter.setText(Double.toString(farbpreis));
 	}
+	/**	
+	* @return Ausgabe des Inhalts des Textfelds <b> tf_farbpreisproliter </b>
+	*/
 	public String getPreisProLiter(){
 		return tf_farbpreisproliter.getText();
 	}
 
 	
-	
+	/**
+	 * 	schreibt die benötigte Menge an Farbe in das Textfeld <b> tf_benötigtefarbe </b>
+	 * @param liter = Menge der Farbe in Litern
+	 * <p>
+	 * hängt ab von der Deckkraft, je nach Methodenaufruf:
+	 * <li>{@link Renovierung.deckkraftDispersionsfarbe}
+	 * <li> {@link Renovierung.deckkraftSeidenglanz}
+	 * <li> {@link Renovierung.deckkraftSchadstofffarbe}
+	 */
 	public void setFarbmenge(double liter) {
 		tf_benoetigtefarbe.setText(Double.toString(liter));
 	}
+	/**	
+	 * @return Ausgabe des Inhalts des Textfelds <b> tf_benötigtefarbe </b>
+	 */
 	public String getBenoetigteFarbe(){
 		return tf_benoetigtefarbe.getText();
 	}
 
-	
+	/**
+	 * 	schreibt die Gesamtkosten in das Textfeld <b> tf_gesamtkosten </b>
+	 * @param endergebnis = Gesamtkosten der Renovierungsarbeiten
+	 * <p>
+	 * Hängt ab von:
+	 * <p>
+	 * {@link Renovierung.gesamtkosten}
+	 */
 	public void setEndergebnis(double endergebnis) {
 		tf_gesamtkosten.setText(Double.toString(endergebnis));
 	}
+	/**	
+	 * @return Ausgabe des Inhalts des Textfelds <b> tf_gesamtkosten </b> als Integer-Wert
+	 */	
 	public int getEndergebnis() {
 		return (int) Double.parseDouble(tf_gesamtkosten.getText());
 	}
 	
-
+	/**	
+	 * @return Ausgabe des Inhalts Textfelds <b> tf_flaeche </b>
+	 */	
 	public String getSquaremeter(){
 		return tf_flaeche.getText();
 	}
-
+	/**
+	 * setzt die Variable <b>raucher</b> auf false, wird für TestRenovierung benötigt
+	 */
 	public void setRaucherFalse(){
 		raucher = false;
 	}
-	public void setRaucherTrue(){
-		raucher = true;
-	}
+
 	
 }
 

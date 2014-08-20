@@ -49,22 +49,38 @@ public class Renovierung {
 	}
 	
 	
-	
+	/**
+	 * setzt die Variable <b>farbpreis</b> auf einen bestimmten Wert
+	 * @param farbpreis = Preis für 1 Liter Farbe
+	 */
 	public void setFarbpreis(double farbpreis){
 		this.farbpreis = farbpreis;
 	}
+	/**
+	 * @return gibt den Wert für den Farbpreis als Double Wert zurück, der in {@link setFarbpreis} gesetzt wurde
+	 */
 	public double getFarbpreis (){
 		return this.farbpreis;
 	}
-	
+	/**
+	 * setzt die Variable <b>benoetigte_farbe</b> auf einen bestimmten Wert
+	 * @param benoetigte_farbe = Farbe, die für gesamte Renovierung benötigt wird
+	 */
 	public void setBenoetigteFarbe(double benoetigte_farbe){
 		this.benoetigte_farbe = benoetigte_farbe;
 	}
-	
+	/**
+	 * setzt die Variable <b>stundenlohn</b> auf einen bestimmten Wert
+	 * @param stundenlohn = Lohn der Maler pro Stunde
+	 * <p>
+	 * hängt ab vom Bundesland
+	 */
 	public void setStundenlohn(double stundenlohn){
 		this.stundenlohn = stundenlohn;
 	}
-	
+	/**
+	 * Zuweisung der Stundenlöhne der einzelnen Bundesländer zu den Indexpostitionen des Arrays durch Aufruf von {@link Swing_View.setStundenlohn}
+	 */
 	public void stundenlohnBundesland(){
 		
 		switch (view2.getIndexBundesland()) {
@@ -104,65 +120,134 @@ public class Renovierung {
 		}
 	}
 	
-	
+	/**
+	 * setzt die Variable <b>deckkraft</b> auf einen bestimmten Wert
+	 * @param deckkraft = Fläche in Quadratmetern, die mit 1L Farbe gestrichen werden kann
+	 */
 	public void setDeckkraft(double deckkraft){
 		this.deckkraft = deckkraft;
 	}
+	/**
+	 * @return gibt den Wert für die Deckkraft als Double Wert zurück, der in {@link setDeckkraft} gesetzt wurde
+	 */
 	public double getDeckkraft(){
 		return this.deckkraft;
 	}
+	
+	/**
+	 * bewirkt, dass der Wert für die Deckkraft auf 8.0 gesetzt wird
+	 *
+	 */
 	public void deckkraftDispersionsfarbe() {
 		setDeckkraft(deckkraft_dispersionsfarbe);	
 	}
+	/**
+	 * bewirkt, dass der Wert für die Deckkraft auf 7.0 gesetzt wird 
+	 */
 	public void deckkraftSeidenglanz() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
+	/**
+	 * bewirkt, dass der Wert für die Deckkraft auf 6.0 gesetzt wird 
+	 */
 	public void deckkraftSchadstofffarbe() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
 	
 	
-	
+	/**
+	 * setzt die Variable <b>abdeckungskosten</b> auf einen bestimmten Wert
+	 * @param abdeckungskosten = Gesamtkosten für die Abdeckung
+	 * <p>
+	 * hängt ab von:
+	 * <ul>
+	 * <li> Fläche
+	 * <li> Materialkosten der Abdeckung pro Quadratmeter
+	 */
 	public void setAbdeckungskosten(double abdeckungskosten){
 		this.abdeckungskosten = abdeckungskosten;
 	}
+	/**
+	 * Abdeckungskosten = Fläche * Materialkosten der Abdeckung pro Quadratmeter  <p>
+	 * errechneter Wert wird an {@link setAbdeckungskosten} übergeben
+	 */
 	public void abdeckungskosten(){
 		abdeckungskosten = Math.round(100.0 * this.materialkosten_abdeckung * this.sqrmt) / 100.0;
 		view2.setAbdeckungskosten(abdeckungskosten);
 	}
 	
-	
+	/**
+	 * setzt die Variable <b>sqrmt</b> auf einen bestimmten Wert
+	 * @param sqrmt = Quadratmeteranzahl der Wohnung
+	 */
 	public void setQuadratmeter(double sqrmt){
 		this.sqrmt = sqrmt;
 	}
 	
+	/**
+	 * setzt die Variable <b>materialkosten_abdeckung</b> auf einen bestimmten Wert
+	 * @param materialkosten_abdeckung = Materialkosten für die Abdeckung
+	 */
 	public void setMaterialkosten(double materialkosten_abdeckung){
 		this.materialkosten_abdeckung = materialkosten_abdeckung;
 	}
 	
+	/**
+	 * setzt die Variable <b>endergebnis</b> auf einen bestimmten Wert
+	 * @param endergebnis = Gesamtkosten der Renovierung
+	 * <p>
+	 * hängt ab von: 
+	 * <ul>
+	 * <li> Fläche
+	 * <li> Höhe
+	 * <li> Abdeckungskosten
+	 * <li> Bundesland
+	 * <li> Farbe
+	 * <li> Raucherwohnung
+	 */
 	public void setEndergebnis(double endergebnis){
 		this.endergebnis = endergebnis;
 	}
 	
 	
 
-
+	/**
+	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Dispersionsfarbe (4.0€)
+	 */
 	public void dispersionsfarbe(){
 		view2.setFarbpreis(preis_dispersionsfarbe);
 	}
+	/**
+	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Latex Seidenglanz (5.5€)
+	 */
 	public void latexfarbe(){
 		view2.setFarbpreis(preis_latex_seidenglanz);
 	}
+	/**
+	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Schadstofffarbe (7.0€)
+	 */
 	public void schadstofffarbe(){
 		view2.setFarbpreis(preis_schadstofffarbe);
 	}
 
 
+	/**
+	 * Aufruf der Methode {@link setFarbmenge} mit der insgesamt benötigten Farbe
+	 * @param liter = Menge der Farbe in Litern
+	 */
 	public void benoetigteFarbe(double deckkraft){
 		farbe = Math.round(100.0 * Double.parseDouble(view2.getZuStreichendeFlaeche()) / deckkraft) / 100.0;
 		view2.setFarbmenge(farbe);
 	}
 	
+	
+	/**	 
+	 * 			Berechnet die Gesamtkosten der Renovierung<p>
+	 * 			<b> Gesamtkosten </b> = 
+	 * 			<p> gesamt benötigte Farbe * Preis/l Farbe
+	 * 			<p>	+ Abdeckungskosten + regionaler Stundenlohn * benötigte Zeit für die Streicharbeit	
+	 * 			<p> * 110% (wenn Raucherwohnung)
+	 */
 	public void gesamtkosten(){
 		
 		endergebnis = 
