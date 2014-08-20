@@ -1,12 +1,9 @@
 package malerarbeit;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -16,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -31,13 +26,9 @@ public class Swing_View extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
-	
-	/**
-	 * Test
-	 */
+	// Allgemeines
 	private JLabel sonstiges;
 	private JButton kosten;
-
 
 	// Raum
 	private JTextField tf_flaeche, tf_raum, tf_hoehe, tf_abdeckungskosten;
@@ -93,9 +84,7 @@ public class Swing_View extends JFrame{
 
 	public void allgemeines() {
 
-		/**
-		 * Wohnfläche angeben
-		*/
+
 		wohnangaben = new JLabel("Angaben zur Wohnfläche:");
 		wohnangaben.setBounds(0,0,400,25);
 		getContentPane().add(wohnangaben);
@@ -147,6 +136,20 @@ public class Swing_View extends JFrame{
 		radioButton_panel.setBackground(Color.white);
 		radioButton_panel.setBounds(5,135,250,50);
 		getContentPane().add(radioButton_panel);
+		
+		// Vorbelegungen werden geleert bei Klick ins Textfeld
+		tf_flaeche.addFocusListener(new java.awt.event.FocusAdapter() {
+			public void focusGained(java.awt.event.FocusEvent evt) {
+				tf_flaeche.setText("");
+		        }
+		});
+		tf_hoehe.addFocusListener(new java.awt.event.FocusAdapter() {
+			public void focusGained(java.awt.event.FocusEvent evt) {
+				tf_hoehe.setText("");
+		        }
+		});
+		
+		
 	}
 
 
@@ -226,8 +229,6 @@ public class Swing_View extends JFrame{
 
 	}
 
-
-
 	private void combo_box_bundesland() {
 
 		pnl_bundesland = new JPanel();
@@ -257,8 +258,6 @@ public class Swing_View extends JFrame{
 		tf_stundenlohn.setBounds(670,140,120,25);
 		getContentPane().add(stundenlohn);
 		getContentPane().add(tf_stundenlohn);
-
-
 
 		// Action Listener Stundenlohn
 		comboBox_bundesland.addActionListener(new ActionListener() {
@@ -318,19 +317,22 @@ public class Swing_View extends JFrame{
 		dispersionsfarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.dispersionsfarbe();
-				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
+				r.benötigte_farbe(r.deckkraft_dispersionsfarbe);
+				r.deckkraft_dispersionsfarbe();
 			}
 		});
 		latex_seidenglanz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.latexfarbe();
-				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
+				r.benötigte_farbe(r.deckkraft_seidenglanz);
+				r.deckkraft_seidenglanz();
 			}
 		});
 		schadstofffarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
 				r.schadstofffarbe();
-				r.benötigte_farbe(Double.parseDouble(getzustreichendeFläche()) / r.deckkraft);
+				r.benötigte_farbe(r.deckkraft_schadstofffarbe);
+				r.deckkraft_schadstofffarbe();
 			}
 		});
 
@@ -355,13 +357,12 @@ public class Swing_View extends JFrame{
 		getContentPane().add(radioButton_panel);
 		radioButton_panel.setBounds(950,20,250,50);
 
-		// Was macht das für einen Unterschied, ob geraucht wird oder nicht?
+		// Auswirkung des Rauchens für Farbe
 		tf_rauchen = new JTextField();
 		tf_rauchen.setBounds(950,75,250,25);
 		getContentPane().add(tf_rauchen);
 
 
-		// Action Listener
 		yes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent rauchen) {
 				tf_rauchen.setText("Sie müssen mit 10% extra Farbe rechnen!");
@@ -404,7 +405,7 @@ public class Swing_View extends JFrame{
 					try{
 						if(str.equals(i + " Zimmer")){
 							w.setAnzahlRaeume(i);
-							w.setHöhe(Double.parseDouble(tf_hoehe.getText()));
+							w.setHoehe(Double.parseDouble(tf_hoehe.getText()));
 							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
 							w.zu_streichende_flaeche();
 							if(decke_streichen.isSelected()){
@@ -448,15 +449,27 @@ public class Swing_View extends JFrame{
 
 
 
-	public void setZuStreichendeFläche(double gesamtfläche){
-		tf_raum.setText(Double.toString(gesamtfläche));
+	public void setZuStreichendeFlaeche(double gesamtflaeche){
+		tf_raum.setText(Double.toString(gesamtflaeche));
 	}
+	public String getzustreichendeFläche(){
+		return tf_raum.getText();
+	}
+	
+	
 
-	public void setKostenFürAbdeckung(double abdeckungskosten){
+	public void setKostenFuerAbdeckung(double abdeckungskosten){
 		tf_abdeckungskosten.setText(Double.toString(abdeckungskosten));
 	}
+	public String getabdeckungskosten(){
+		return tf_abdeckungskosten.getText();
+	}
+	
+	
 
-
+	public int bundesland(){
+		return comboBox_bundesland.getSelectedIndex();
+	}
 	public void set_tf_Stundenlohn(double stundenlohn) {
 		try{
 			tf_stundenlohn.setText(Double.toString(stundenlohn));
@@ -464,42 +477,31 @@ public class Swing_View extends JFrame{
 			tf_stundenlohn.setText("Fehler");
 		}
 	}
-	
-	public int bundesland(){
-		return comboBox_bundesland.getSelectedIndex();
+	public String getregionalerStundenlohn(){
+		return tf_stundenlohn.getText();
 	}
+	
 
 
 	public void setFarbpreis(double farbpreis) {
 		tf_farbpreisproliter.setText(Double.toString(farbpreis));
 	}
-
-	public void setFarbmenge(double liter) {
-		tf_benoetigtefarbe.setText(Double.toString(liter));
-	}
-
-	public void setEndergebnis(double endergebnis) {
-		tf_gesamtkosten.setText(Double.toString(endergebnis));
-	}
-
-	public String getzustreichendeFläche(){
-		return tf_raum.getText();
-	}
-
 	public String getpreisproliter(){
 		return tf_farbpreisproliter.getText();
 	}
 
-	public String getbenötigtefarbe(){
+	
+	
+	public void setFarbmenge(double liter) {
+		tf_benoetigtefarbe.setText(Double.toString(liter));
+	}
+	public String getbenoetigtefarbe(){
 		return tf_benoetigtefarbe.getText();
 	}
 
-	public String getabdeckungskosten(){
-		return tf_abdeckungskosten.getText();
-	}
-
-	public String getregionalerStundenlohn(){
-		return tf_stundenlohn.getText();
+	
+	public void setEndergebnis(double endergebnis) {
+		tf_gesamtkosten.setText(Double.toString(endergebnis));
 	}
 
 	public String getSquaremeter(){

@@ -2,12 +2,6 @@ package malerarbeit;
 
 public class Renovierung {
 	
-	/* Bundesländer
-	 * 
-	 * Malerkosten:
-	 * http://malerundlackiererinfo.de/so-viel-gehalt-bekommen-maler-und-lackierer/
-	   (Annahme: 22 Arbeitstage/Monat)
-	 */
 	final double Sachsen_Anhalt = 28.66;
 	final double Saarland = 29.18;
 	final double Brandenburg = 29.59;
@@ -25,27 +19,26 @@ public class Renovierung {
 	final double Baden_Wuerttemberg = 32.80;
 	final double Rheinland_Pfalz = 34.20;
 
-	// Berechnung
-	final double preis_dispersionsfarbe = 4.0; // jeweils pro Liter Farbe
+	final double preis_dispersionsfarbe = 4.0; 
 	final double preis_latex_seidenglanz = 5.5;
 	final double preis_schadstofffarbe = 7.0;
-	final double deckkraft = 7.0; // VON DER FARBE ABHÄNGIG MACHEN!!!
-	final double arbeitsleistung = 10.0; // Quadratmeter pro Stunde
+	final double deckkraft_dispersionsfarbe = 8.0;
+	final double deckkraft_seidenglanz = 7.0;
+	final double deckkraft_schadstofffarbe = 6.0;
+	final double arbeitsleistung = 10.0; // in m²/h
 	
 	double farbpreis;
-	double benötigte_farbe;
+	double farbe;
+	double deckkraft;
+	double benoetigte_farbe;
 	double stundenlohn;
 	double abdeckungskosten;
 	double materialkosten_abdeckung;
 	double endergebnis;
-	double sqrmt; // Quadratmeter der Wohnung
+	double sqrmt;
 	
-
-	
-	// Objekte erzeugen
 	Swing_View view2;
 	Wohnung w2;
-	
 	
 	
 	Renovierung(Swing_View view2) {
@@ -61,36 +54,12 @@ public class Renovierung {
 		this.farbpreis = farbpreis;
 	}
 	
-	public void setBenötigteFarbe(double benötigte_farbe){
-		this.benötigte_farbe = benötigte_farbe;
+	public void setBenoetigteFarbe(double benötigte_farbe){
+		this.benoetigte_farbe = benötigte_farbe;
 	}
-	
 	
 	public void setStundenlohn(double stundenlohn){
 		this.stundenlohn = stundenlohn;
-	}
-	
-	
-	public void setAbdeckungskosten(double abdeckungskosten){
-		this.abdeckungskosten = abdeckungskosten;
-	}
-	
-	public void setQuadratmeter(double sqrmt){
-		this.sqrmt = sqrmt;
-	}
-	
-	public void setMaterialkosten(double materialkosten_abdeckung){
-		this.materialkosten_abdeckung = materialkosten_abdeckung;
-	}
-	
-	public void setEndergebnis(double endergebnis){
-		this.endergebnis = endergebnis;
-	}
-	
-	
-	public void abdeckungskosten(){
-		abdeckungskosten = this.materialkosten_abdeckung * this.sqrmt;
-		view2.setKostenFürAbdeckung(abdeckungskosten);
 	}
 	
 	public void stundenlohn_bundesland(){
@@ -131,6 +100,49 @@ public class Renovierung {
 		break;
 		}
 	}
+	
+	
+	public void setDeckkraft(double deckkraft){
+		this.deckkraft = deckkraft;
+	}
+	public double getDeckkraft(){
+		return this.deckkraft;
+	}
+	public void deckkraft_dispersionsfarbe() {
+		setDeckkraft(deckkraft_dispersionsfarbe);	
+	}
+	public void deckkraft_seidenglanz() {
+		setDeckkraft(deckkraft_seidenglanz);
+	}
+	public void deckkraft_schadstofffarbe() {
+		setDeckkraft(deckkraft_seidenglanz);
+	}
+	
+	
+	
+	public void setAbdeckungskosten(double abdeckungskosten){
+		this.abdeckungskosten = abdeckungskosten;
+	}
+	public void abdeckungskosten(){
+		abdeckungskosten = Math.round(100.0 * this.materialkosten_abdeckung * this.sqrmt) / 100.0;
+		view2.setKostenFuerAbdeckung(abdeckungskosten);
+	}
+	
+	
+	public void setQuadratmeter(double sqrmt){
+		this.sqrmt = sqrmt;
+	}
+	
+	public void setMaterialkosten(double materialkosten_abdeckung){
+		this.materialkosten_abdeckung = materialkosten_abdeckung;
+	}
+	
+	public void setEndergebnis(double endergebnis){
+		this.endergebnis = endergebnis;
+	}
+	
+	
+
 
 	public void dispersionsfarbe(){
 		view2.setFarbpreis(preis_dispersionsfarbe);
@@ -142,35 +154,28 @@ public class Renovierung {
 		view2.setFarbpreis(preis_schadstofffarbe);
 	}
 
-	public void benötigte_farbe(double liter){
-		view2.setFarbmenge(liter);
+	
+	
+	public void benötigte_farbe(double deckkraft){
+		farbe = Math.round(100.0 * Double.parseDouble(view2.getzustreichendeFläche()) / deckkraft) / 100.0;
+		view2.setFarbmenge(farbe);
 	}
 	
-	
-	/*	 Gesamtkosten = 
-	 * 			(	gesamt benötigte Farbe
-	 * 				* Preis/l Farbe
-	 * 				+ Abdeckungskosten
-	 * 				+ regionaler Stundenlohn * benötigte Zeit für die Streicharbeit   )
-	 * 				
-	 * 			* 1,1 (wenn Raucherwohnung)
-	 */
 	public void gesamtkosten(){
 		
 		endergebnis = 
 				(int)
-				(Double.parseDouble(view2.getbenötigtefarbe())
+				(Double.parseDouble(view2.getbenoetigtefarbe())
 				* Double.parseDouble(view2.getpreisproliter())
 				+ Double.parseDouble(view2.getabdeckungskosten())
 				+ Double.parseDouble(view2.getregionalerStundenlohn())
 				* (Double.parseDouble(view2.getzustreichendeFläche()) / arbeitsleistung));
 		
-		// 10 % Extra-Farbe
 		if(view2.raucher == true){
 			
 			endergebnis = 
 					(int)
-					(Double.parseDouble(view2.getbenötigtefarbe()) * 1.1
+					(Double.parseDouble(view2.getbenoetigtefarbe()) * 1.1
 					* Double.parseDouble(view2.getpreisproliter())
 					+ Double.parseDouble(view2.getabdeckungskosten())
 					+ Double.parseDouble(view2.getregionalerStundenlohn())
@@ -178,6 +183,5 @@ public class Renovierung {
 		}
 		view2.setEndergebnis(endergebnis);
 	}
-
 	
 }

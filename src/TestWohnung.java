@@ -6,7 +6,6 @@ import java.rmi.RemoteException;
 import junit.framework.TestCase;
 
 
-
 public class TestWohnung extends TestCase {
 
 	
@@ -23,7 +22,7 @@ public class TestWohnung extends TestCase {
 		hoehe = 2.40;
 		
 		flaeche = (Math.sqrt(30.6/4.0) * 2.40 * 4.0 * 4.0);
-		wohnung.setHöhe(hoehe);
+		wohnung.setHoehe(hoehe);
 		wohnung.setAnzahlRaeume(4);
 		wohnung.setQuadratmeter(30.6);
 		wohnung.zu_streichende_flaeche();	
@@ -43,8 +42,6 @@ public class TestWohnung extends TestCase {
 
 	
 	// Asserts testen, ob eine Bedingung erfüllt ist, andernfalls wird der Test nicht bestanden
-	// assertEquals(expected value, real value)
-	
 	public void testsetHoehe() throws RemoteException {
 		setUp();
 		assertEquals(hoehe, wohnung.getHoehe(), 0.001);
