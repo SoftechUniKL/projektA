@@ -37,11 +37,11 @@ public class Renovierung {
 	double endergebnis;
 	double sqrmt;
 	
-	Swing_View view2;
+	Swing_View swing_view;
 	Wohnung w2;
 	
 	Renovierung(Swing_View view2) {
-		this.view2 = view2;
+		this.swing_view = view2;
 	}
 	Renovierung(Wohnung w2) {
 		this.w2 = w2;
@@ -81,40 +81,41 @@ public class Renovierung {
 	 */
 	public void stundenlohnBundesland(){
 		
-		switch (view2.getIndexBundesland()) {
+		switch (swing_view.getIndexBundesland()) {
 
-		case 1:		view2.setStundenlohn(Baden_Wuerttemberg);
+		case 1:		swing_view.setStundenlohn(Baden_Wuerttemberg);
 		break;
-		case 2:		view2.setStundenlohn(Bayern); 
+		case 2:		swing_view.setStundenlohn(Bayern); 
 		break;
-		case 3:		view2.setStundenlohn(Berlin);
+		case 3:		swing_view.setStundenlohn(Berlin);
 		break;
-		case 4:		view2.setStundenlohn(Brandenburg);
+		case 4:		swing_view.setStundenlohn(Brandenburg);
 		break;
-		case 5:		view2.setStundenlohn(Bremen);
+		case 5:		swing_view.setStundenlohn(Bremen);
 		break;
-		case 6:		view2.setStundenlohn(Hamburg);
+		case 6:		swing_view.setStundenlohn(Hamburg);
 		break;
-		case 7:		view2.setStundenlohn(Hessen);
+		case 7:		swing_view.setStundenlohn(Hessen);
 		break;
-		case 8:		view2.setStundenlohn(Mecklenburg_Vorpommern);
+		case 8:		swing_view.setStundenlohn(Mecklenburg_Vorpommern);
 		break;
-		case 9:		view2.setStundenlohn(Niedersachsen);
+		case 9:		swing_view.setStundenlohn(Niedersachsen);
 		break;
-		case 10:	view2.setStundenlohn(Nordrhein_Westfalen);
+		case 10:	swing_view.setStundenlohn(Nordrhein_Westfalen);
 		break;
-		case 11:	view2.setStundenlohn(Rheinland_Pfalz);
+		case 11:	swing_view.setStundenlohn(Rheinland_Pfalz);
 		break;
-		case 12:	view2.setStundenlohn(Saarland);
+		case 12:	swing_view.setStundenlohn(Saarland);
 		break;
-		case 13:	view2.setStundenlohn(Sachsen);
+		case 13:	swing_view.setStundenlohn(Sachsen);
 		break;
-		case 14:	view2.setStundenlohn(Sachsen_Anhalt);
+		case 14:	swing_view.setStundenlohn(Sachsen_Anhalt);
 		break;
-		case 15:	view2.setStundenlohn(Schleswig_Holstein);
+		case 15:	swing_view.setStundenlohn(Schleswig_Holstein);
 		break;
-		case 16:	view2.setStundenlohn(Thueringen);
+		case 16:	swing_view.setStundenlohn(Thueringen);
 		break;
+		default: 	swing_view.setStundenlohn(-1);
 		}
 	}
 	
@@ -132,25 +133,34 @@ public class Renovierung {
 		return this.deckkraft;
 	}
 	
+	
+	
 	/**
 	 * bewirkt, dass der Wert für die Deckkraft auf 8.0 gesetzt wird
 	 *
 	 */
+	
 	public void deckkraftDispersionsfarbe() {
 		setDeckkraft(deckkraft_dispersionsfarbe);	
 	}
+	
 	/**
 	 * bewirkt, dass der Wert für die Deckkraft auf 7.0 gesetzt wird 
 	 */
+	
 	public void deckkraftSeidenglanz() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
+	
 	/**
 	 * bewirkt, dass der Wert für die Deckkraft auf 6.0 gesetzt wird 
 	 */
+	
 	public void deckkraftSchadstofffarbe() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
+	
+	
 	
 	
 	/**
@@ -171,7 +181,7 @@ public class Renovierung {
 	 */
 	public void abdeckungskosten(){
 		abdeckungskosten = Math.round(100.0 * this.materialkosten_abdeckung * this.sqrmt) / 100.0;
-		view2.setAbdeckungskosten(abdeckungskosten);
+		swing_view.setAbdeckungskosten(abdeckungskosten);
 	}
 	
 	/**
@@ -213,29 +223,29 @@ public class Renovierung {
 	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Dispersionsfarbe (4.0€)
 	 */
 	public void dispersionsfarbe(){
-		view2.setFarbpreis(preis_dispersionsfarbe);
+		swing_view.setFarbpreis(preis_dispersionsfarbe);
 	}
 	/**
 	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Latex Seidenglanz (5.5€)
 	 */
 	public void latexfarbe(){
-		view2.setFarbpreis(preis_latex_seidenglanz);
+		swing_view.setFarbpreis(preis_latex_seidenglanz);
 	}
 	/**
 	 * Aufruf der Methode {@link setFarbpreis} mit dem Preis für Schadstofffarbe (7.0€)
 	 */
 	public void schadstofffarbe(){
-		view2.setFarbpreis(preis_schadstofffarbe);
+		swing_view.setFarbpreis(preis_schadstofffarbe);
 	}
 
 
 	/**
 	 * Aufruf der Methode {@link setFarbmenge} mit der insgesamt benötigten Farbe
-	 * @param liter = Menge der Farbe in Litern
+	 * @param deckkraft = Menge der Farbe in Litern
 	 */
 	public void benoetigteFarbe(double deckkraft){
-		farbe = Math.round(100.0 * Double.parseDouble(view2.getZuStreichendeFlaeche()) / deckkraft) / 100.0;
-		view2.setFarbmenge(farbe);
+		farbe = Math.round(100.0 * Double.parseDouble(swing_view.getZuStreichendeFlaeche()) / deckkraft) / 100.0;
+		swing_view.setFarbmenge(farbe);
 	}
 	
 	
@@ -250,23 +260,23 @@ public class Renovierung {
 		
 		endergebnis = 
 				(int)
-				(Double.parseDouble(view2.getBenoetigteFarbe())
-				* Double.parseDouble(view2.getPreisProLiter())
-				+ Double.parseDouble(view2.getAbdeckungskosten())
-				+ Double.parseDouble(view2.getStundenlohn())
-				* (Double.parseDouble(view2.getZuStreichendeFlaeche()) / arbeitsleistung));
+				(Double.parseDouble(swing_view.getBenoetigteFarbe())
+				* Double.parseDouble(swing_view.getPreisProLiter())
+				+ Double.parseDouble(swing_view.getAbdeckungskosten())
+				+ Double.parseDouble(swing_view.getStundenlohn())
+				* (Double.parseDouble(swing_view.getZuStreichendeFlaeche()) / arbeitsleistung));
 		
-		if(view2.raucher == true){
+		if(swing_view.raucher == true){
 			
 			endergebnis = 
 					(int)
-					(Double.parseDouble(view2.getBenoetigteFarbe()) * 1.1
-					* Double.parseDouble(view2.getPreisProLiter())
-					+ Double.parseDouble(view2.getAbdeckungskosten())
-					+ Double.parseDouble(view2.getStundenlohn())
-					* (Double.parseDouble(view2.getZuStreichendeFlaeche()) / arbeitsleistung));
+					(Double.parseDouble(swing_view.getBenoetigteFarbe()) * 1.1
+					* Double.parseDouble(swing_view.getPreisProLiter())
+					+ Double.parseDouble(swing_view.getAbdeckungskosten())
+					+ Double.parseDouble(swing_view.getStundenlohn())
+					* (Double.parseDouble(swing_view.getZuStreichendeFlaeche()) / arbeitsleistung));
 		}
-		view2.setEndergebnis(endergebnis);
+		swing_view.setEndergebnis(endergebnis);
 	}
 	
 }

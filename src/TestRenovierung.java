@@ -62,6 +62,9 @@ public class TestRenovierung extends TestCase {
 		
 	}
 	
+	 /**
+	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung zu schaffen
+	  */
 	protected void setUpCase2() throws RemoteException {
 
 		swing.setIndexBundesland(1);
@@ -70,8 +73,21 @@ public class TestRenovierung extends TestCase {
 		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
 	}
 	
+	 /**
+	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung zu schaffen
+	  */
 	protected void setUpCase3() throws RemoteException {
 		swing.setIndexBundesland(16);
+		renovierung.stundenlohnBundesland();
+		stundenlohn_expected = 30.04;
+		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
+	}
+	
+	 /**
+	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung zu schaffen
+	  */
+	protected void setUpSpecialCase() throws RemoteException {
+		swing.setIndexBundesland(20);
 		renovierung.stundenlohnBundesland();
 		stundenlohn_expected = 30.04;
 		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
@@ -143,7 +159,17 @@ public class TestRenovierung extends TestCase {
 		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
 		tearDown();	
 	}
-	
+	/**
+	 * Testet, ob erwarteter und tatsächlicher Wert für den Stundenlohn übereinstimmen
+	 * @throws RemoteException
+	 */
+	/*
+	public void teststundenlohn_bundeslandSpecial() throws RemoteException {
+		setUpSpecialCase();
+		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
+		tearDown();	
+	}
+	*/
 	/**
 	 * Testet, ob erwarteter und tatsächlicher Wert für die Gesamtkosten der Renovierung übereinstimmen
 	 * @throws RemoteException
