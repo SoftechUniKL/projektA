@@ -13,7 +13,6 @@ public class Wohnung {
 		this.view1 = view1;
 	}
 
-
 	/**
 	 * setzt die Variable <b>hoehe</b> auf einen bestimmten Wert
 	 * @param hoehe = übergebener Wert für die Höhe
@@ -61,8 +60,14 @@ public class Wohnung {
 	 * der errechnete Wert wird an {@link Swing_View.setZuStreichendeFlaeche} übergeben
 	 */
 	public void zuStreichendeFlaeche(){
+		
+		if (isPositive(this.sqrmt) && isPositive(this.anzahl_raeume) && isPositive(this.hoehe)){
+			
 		zu_streichende_flaeche = Math.round(100.0 * (Math.sqrt(this.sqrmt/this.anzahl_raeume) * this.hoehe * 4 * this.anzahl_raeume)) / 100.0;
 		view1.setZuStreichendeFlaeche(zu_streichende_flaeche);
+		}
+		
+		else view1.setZuStreichendeFlaeche(-1);
 	}
 
 	/** 
@@ -73,5 +78,11 @@ public class Wohnung {
 		view1.setZuStreichendeFlaeche(Math.round(100.0 * zu_streichende_flaeche) / 100.0);
 	}
 
+	public boolean isPositive(double d) {
+		if (d >= 0) {
+			return true;
+		}
+		else return false;
+	}
 
 }

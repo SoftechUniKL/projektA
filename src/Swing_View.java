@@ -32,7 +32,7 @@ public class Swing_View extends JFrame{
 	private JButton kosten;
 
 	// Raum
-	private JTextField tf_flaeche, tf_raum, tf_hoehe, tf_abdeckungskosten;
+	private JTextField tf_quadratmeter, tf_zuStreichendeFlaeche, tf_hoehe, tf_abdeckungskosten;
 	private JLabel gesamtflaeche, hoehe, streichflaeche, wohnangaben;
 	private JRadioButton decke_streichen, decke_nichtstreichen;
 
@@ -63,8 +63,7 @@ public class Swing_View extends JFrame{
 	private JTextField tf_gesamtkosten;
 	public boolean raucher;
 
-	
-	
+
 	public Swing_View() {
 
 		super("Malerkosten");
@@ -85,7 +84,6 @@ public class Swing_View extends JFrame{
 
 	public void allgemeines() {
 
-
 		wohnangaben = new JLabel("Angaben zur Wohnfläche:");
 		wohnangaben.setBounds(0,0,400,25);
 		getContentPane().add(wohnangaben);
@@ -102,25 +100,25 @@ public class Swing_View extends JFrame{
 		gesamtflaeche = new JLabel("(1) Wie groß ist die Wohnung?");
 		streichflaeche = new JLabel("~ zu streichende Gesamtfläche der Wohnung (in m²):");
 		hoehe = new JLabel("(2) Durchschnittliche Deckenhöhe:");
-		tf_flaeche = new JTextField("Angabe in m²");
+		tf_quadratmeter = new JTextField("Angabe in m²");
 		tf_hoehe = new JTextField("Angabe in m");
-		tf_raum = new JTextField();
+		tf_zuStreichendeFlaeche = new JTextField();
 
 		// Positionen festlegen
 		gesamtflaeche.setBounds(5,30,400,25);
-		tf_flaeche.setBounds(5,50,100,25);
+		tf_quadratmeter.setBounds(5,50,100,25);
 		hoehe.setBounds(5,80,400,25);
 		tf_hoehe.setBounds(5,100,100,25);
 		streichflaeche.setBounds(5,430,400,25);
-		tf_raum.setBounds(5,450,150,25);
+		tf_zuStreichendeFlaeche.setBounds(5,450,150,25);
 
 		// Elemente zum Fenster hinzufuegen
 		getContentPane().add(gesamtflaeche);
 		getContentPane().add(hoehe);
-		getContentPane().add(tf_flaeche);
+		getContentPane().add(tf_quadratmeter);
 		getContentPane().add(tf_hoehe);
 		getContentPane().add(streichflaeche);
-		getContentPane().add(tf_raum);
+		getContentPane().add(tf_zuStreichendeFlaeche);
 
 		// Decke streichen?
 		decke_streichen = new JRadioButton("Ja", false);
@@ -139,9 +137,9 @@ public class Swing_View extends JFrame{
 		getContentPane().add(radioButton_panel);
 		
 		// Vorbelegungen werden geleert bei Klick ins Textfeld
-		tf_flaeche.addFocusListener(new java.awt.event.FocusAdapter() {
+		tf_quadratmeter.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusGained(java.awt.event.FocusEvent evt) {
-				tf_flaeche.setText("");
+				tf_quadratmeter.setText("");
 		        }
 		});
 		tf_hoehe.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -152,7 +150,6 @@ public class Swing_View extends JFrame{
 		
 		
 	}
-
 
 	private void abdeckung() {
 
@@ -188,26 +185,49 @@ public class Swing_View extends JFrame{
 
 		folieButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent folie) {
+				
 				try{
-					if(folieButton.isSelected()){
-						r.setMaterialkosten(0.5);
-						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abdeckungskosten();
-					}	
+					
+					if (positive(tf_quadratmeter.getText()) == true) {
+
+						if(folieButton.isSelected()){
+							r.setMaterialkosten(0.5);
+							r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+							r.abdeckungskosten();
+						}	
+					}
+					else{
+						tf_quadratmeter.setText("Positive Zahl!");
+						tf_abdeckungskosten.setText("Angaben überprüfen!");
+						tf_zuStreichendeFlaeche.setText("Positive Zahlen gefordert!");
+					}
+					
 				} catch (NumberFormatException fol){
 					tf_abdeckungskosten.setText("Falsches Eingabeformat!");
 				}
 			}
+
 		});
 
 		kreppapierButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent kreppapier) {
+				
 				try{
-					if(kreppapierButton.isSelected()){
-						r.setMaterialkosten(0.7);
-						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abdeckungskosten();
-					}	
+				
+					if (positive(tf_quadratmeter.getText()) == true) {
+					
+						if(kreppapierButton.isSelected()){
+							r.setMaterialkosten(0.7);
+							r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+							r.abdeckungskosten();
+						}	
+					}
+					else{
+						tf_quadratmeter.setText("Positive Zahl!");
+						tf_abdeckungskosten.setText("Angaben überprüfen!");
+						tf_zuStreichendeFlaeche.setText("Positive Zahlen gefordert!");
+					}
+					
 				} catch (NumberFormatException krep){
 					tf_abdeckungskosten.setText("Falsches Eingabeformat!");
 				}
@@ -216,12 +236,23 @@ public class Swing_View extends JFrame{
 
 		kartonButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent karton) {
+				
 				try{
-					if(kartonButton.isSelected()){
-						r.setMaterialkosten(1.0);
-						r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
-						r.abdeckungskosten();
-					}	
+					
+					if (positive(tf_quadratmeter.getText()) == true) {
+
+						if(kartonButton.isSelected()){
+							r.setMaterialkosten(1.0);
+							r.setQuadratmeter(Double.parseDouble(getSquaremeter()));
+							r.abdeckungskosten();
+						}	
+					}
+					else{
+						tf_quadratmeter.setText("Positive Zahl!");
+						tf_abdeckungskosten.setText("Angaben überprüfen!");
+						tf_zuStreichendeFlaeche.setText("Positive Zahlen gefordert!");
+					}
+					
 				} catch (NumberFormatException kar){
 					tf_abdeckungskosten.setText("Falsches Eingabeformat!");
 				}
@@ -237,7 +268,7 @@ public class Swing_View extends JFrame{
 		pnl_bundesland.add(bundesland);
 
 		// Array für unsere JComboBox
-		String bundesländer[] = {"-Bitte wählen-", "Baden-Württemberg", "Bayern",
+		String bundeslaender[] = {"-Bitte wählen-", "Baden-Württemberg", "Bayern",
 				"Berlin", "Brandenburg", "Bremen",
 				"Hamburg", "Hessen", "Mecklenburg-Vorpommern",
 				"Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz",
@@ -245,7 +276,7 @@ public class Swing_View extends JFrame{
 				"Schleswig-Holstein", "Thüringen"};
 
 		//JComboBox mit Bundesländer-Einträgen wird erstellt
-		comboBox_bundesland = new JComboBox<String>(bundesländer);
+		comboBox_bundesland = new JComboBox<String>(bundeslaender);
 
 		//JComboBox wird Panel hinzugefügt
 		pnl_bundesland.add(comboBox_bundesland);
@@ -260,7 +291,7 @@ public class Swing_View extends JFrame{
 		getContentPane().add(stundenlohn);
 		getContentPane().add(tf_stundenlohn);
 
-		// Action Listener Stundenlohn
+	
 		comboBox_bundesland.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent bund) {
 				r.stundenlohnBundesland();
@@ -271,6 +302,57 @@ public class Swing_View extends JFrame{
 
 	}
 
+
+	void anzahlRaeume(){
+
+		raum = new JList<String>(zimmer);
+
+		// nur eine Auswahl möglich
+		raum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		JPanel r = new JPanel();
+		r.setBackground(Color.white);
+		r.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEtchedBorder(), "(4) Anzahl der Räume wählen:"));
+		r.add(raum);
+		getContentPane().add(r);
+		r.setBounds(5,200,190,200);
+
+
+		// Annahme: Jeder Raum gleich groß und quadratisch	
+		raum.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent k) {
+
+				String str = (String) raum.getSelectedValue();
+				for (int i = 1; i < 10; i++) {
+					try{
+					
+						
+						if (positive(tf_quadratmeter.getText()) == true && positive(tf_hoehe.getText()) == true) {	
+						
+						
+						if(str.equals(i + " Zimmer")){
+							w.setAnzahlRaeume(i);
+							w.setHoehe(Double.parseDouble(tf_hoehe.getText()));
+							w.setQuadratmeter(Double.parseDouble(tf_quadratmeter.getText()));
+							w.zuStreichendeFlaeche();
+							if(decke_streichen.isSelected()){
+								w.addDeckenflaeche();
+							}
+						}
+						}
+						else{
+							tf_quadratmeter.setText("Positive Zahl!");
+							tf_hoehe.setText("Positive Zahl!");
+							tf_zuStreichendeFlaeche.setText("Positive Zahlen gefordert!");
+						}
+					}catch(NumberFormatException raum){
+						tf_zuStreichendeFlaeche.setText("Falsche/Fehlende Angabe");
+					}
+				}
+			}	
+		}); 	
+	}
 
 	private void farbe() {
 
@@ -313,27 +395,65 @@ public class Swing_View extends JFrame{
 		tf_benoetigtefarbe.setBounds(580,450,150,25);
 
 
-
-
 		dispersionsfarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
-				r.dispersionsfarbe();
-				r.benoetigteFarbe(r.deckkraft_dispersionsfarbe);
-				r.deckkraftDispersionsfarbe();
+				
+				try{	
+
+					if(positive(tf_zuStreichendeFlaeche.getText()) == true){
+						r.dispersionsfarbe();
+						r.benoetigteFarbe(r.deckkraft_dispersionsfarbe);
+						r.deckkraftDispersionsfarbe();
+					}
+					else{
+						tf_benoetigtefarbe.setText("Angaben überprüfen!");
+						tf_farbpreisproliter.setText("Angaben überprüfen!");
+					}
+					
+				} catch(Exception format){
+					tf_benoetigtefarbe.setText("fehlerhafte Angaben");
+				}
 			}
 		});
 		latex_seidenglanz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
-				r.latexfarbe();
-				r.benoetigteFarbe(r.deckkraft_seidenglanz);
-				r.deckkraftSeidenglanz();
+				
+				try{	
+
+					if(positive(tf_zuStreichendeFlaeche.getText()) == true){
+						r.latexfarbe();
+						r.benoetigteFarbe(r.deckkraft_seidenglanz);
+						r.deckkraftSeidenglanz();
+					}
+					else{
+						tf_benoetigtefarbe.setText("Angaben überprüfen!");
+						tf_farbpreisproliter.setText("Angaben überprüfen!");
+					}
+					
+				} catch(Exception format){
+					tf_benoetigtefarbe.setText("fehlerhafte Angaben");
+				}
 			}
 		});
 		schadstofffarbe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent dispersion) {
-				r.schadstofffarbe();
-				r.benoetigteFarbe(r.deckkraft_schadstofffarbe);
-				r.deckkraftSchadstofffarbe();
+				
+				try{	
+
+					if(positive(tf_zuStreichendeFlaeche.getText()) == true){
+
+						r.schadstofffarbe();
+						r.benoetigteFarbe(r.deckkraft_schadstofffarbe);
+						r.deckkraftSchadstofffarbe();
+					}
+					else{
+						tf_benoetigtefarbe.setText("Angaben überprüfen!");
+						tf_farbpreisproliter.setText("Angaben überprüfen!");
+					}
+					
+				} catch(Exception format){
+					tf_benoetigtefarbe.setText("fehlerhafte Angaben");
+				}
 			}
 		});
 
@@ -379,49 +499,6 @@ public class Swing_View extends JFrame{
 		});
 	}
 
-
-
-	void anzahlRaeume(){
-
-		raum = new JList<String>(zimmer);
-
-		// nur eine Auswahl möglich
-		raum.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		JPanel r = new JPanel();
-		r.setBackground(Color.white);
-		r.setBorder(BorderFactory.createTitledBorder(
-				BorderFactory.createEtchedBorder(), "(4) Anzahl der Räume wählen:"));
-		r.add(raum);
-		getContentPane().add(r);
-		r.setBounds(5,200,190,200);
-
-
-		// Annahme: Jeder Raum gleich groß und quadratisch	
-		raum.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent k) {
-
-				String str = (String) raum.getSelectedValue();
-				for (int i = 1; i < 10; i++) {
-					try{
-						if(str.equals(i + " Zimmer")){
-							w.setAnzahlRaeume(i);
-							w.setHoehe(Double.parseDouble(tf_hoehe.getText()));
-							w.setQuadratmeter(Double.parseDouble(tf_flaeche.getText()));
-							w.zuStreichendeFlaeche();
-							if(decke_streichen.isSelected()){
-								w.addDeckenflaeche();
-							}
-						}
-					}catch(NumberFormatException raum){
-						tf_raum.setText("Falsche/Fehlende Angabe");
-					}
-				}
-			}	
-		}); 	
-	}
-
-
 	void gesamtkosten(){
 
 		kosten = new JButton("(9) Gesamtkosten berechnen");
@@ -441,7 +518,7 @@ public class Swing_View extends JFrame{
 				try {
 					r.gesamtkosten();					
 				}catch (NumberFormatException erg) {
-					tf_gesamtkosten.setText(String.valueOf("Aktion nicht möglich!"));
+					tf_gesamtkosten.setText(String.valueOf("Fehler"));
 				}
 			}
 		});
@@ -462,13 +539,13 @@ public class Swing_View extends JFrame{
 	 * <li> {@link Wohnung.addDeckenFlaeche}
 	 */
 	public void setZuStreichendeFlaeche(double gesamtflaeche){
-		tf_raum.setText(Double.toString(gesamtflaeche));
+		tf_zuStreichendeFlaeche.setText(Double.toString(gesamtflaeche));
 	}
 	/**	
 	 * @return Ausgabe des Inhalts des Textfelds <b> tf_Raum </b>
 	 */
 	public String getZuStreichendeFlaeche(){
-		return tf_raum.getText();
+		return tf_zuStreichendeFlaeche.getText();
 	}
 	
 	
@@ -586,7 +663,7 @@ public class Swing_View extends JFrame{
 	 * @return Ausgabe des Inhalts Textfelds <b> tf_flaeche </b>
 	 */	
 	public String getSquaremeter(){
-		return tf_flaeche.getText();
+		return tf_quadratmeter.getText();
 	}
 	/**
 	 * setzt die Variable <b>raucher</b> auf false, wird für TestRenovierung benötigt
@@ -595,6 +672,23 @@ public class Swing_View extends JFrame{
 		raucher = false;
 	}
 
+	
+	/**
+	 * 
+	 * Prüft, ob die in den verschiedenen Textfeldern eingegebenen Werte größer als oder gleich 0 sind. Es werden damit Randfälle und unerwünschte Fälle, die durch negative Eingaben entstehen, abgefangen
+	 * @param s = eingelesener Double-Wert als String, z.B. "2.4"
+	 * @return true, wenn der Double-Wert größer als 0 ist, ansonsten false
+	 */
+	public boolean positive(String s) {
+		try{
+		if (Double.parseDouble(s) >= 0) {
+			return true;
+		}
+		else return false;
+		} catch (Exception type){
+			return false;
+		}
+	}
 	
 }
 

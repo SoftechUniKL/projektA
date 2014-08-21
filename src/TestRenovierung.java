@@ -20,7 +20,7 @@ public class TestRenovierung extends TestCase {
 	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung zu schaffen
 	  */
 	protected void setUp() throws RemoteException {
-		
+			
 		swing = new Swing_View();
 		renovierung = new Renovierung(swing);
 		wohnung = new Wohnung(swing);
@@ -62,6 +62,21 @@ public class TestRenovierung extends TestCase {
 		
 	}
 	
+	protected void setUpCase2() throws RemoteException {
+
+		swing.setIndexBundesland(1);
+		renovierung.stundenlohnBundesland();
+		stundenlohn_expected = 32.80;
+		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
+	}
+	
+	protected void setUpCase3() throws RemoteException {
+		swing.setIndexBundesland(16);
+		renovierung.stundenlohnBundesland();
+		stundenlohn_expected = 30.04;
+		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
+	}
+	
 	 /**
 	  * Testressourcen werden wieder freigegeben
 	  */
@@ -84,6 +99,7 @@ public class TestRenovierung extends TestCase {
 	 * Testet, ob erwarteter und tatsächlicher Wert für die Abdeckungskosten übereinstimmen
 	 * @throws RemoteException
 	 */
+	
 	public void testabdeckungskosten() throws RemoteException {
 		setUp();
 		assertEquals(abdeckungskosten_expected, abdeckungskosten_actual, 0.001);
@@ -104,8 +120,26 @@ public class TestRenovierung extends TestCase {
 	 * Testet, ob erwarteter und tatsächlicher Wert für den Stundenlohn übereinstimmen
 	 * @throws RemoteException
 	 */
-	public void teststundenlohn_bundesland() throws RemoteException {
+	public void teststundenlohn_bundesland1() throws RemoteException {
 		setUp();
+		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
+		tearDown();	
+	}
+	/**
+	 * Testet, ob erwarteter und tatsächlicher Wert für den Stundenlohn übereinstimmen
+	 * @throws RemoteException
+	 */
+	public void teststundenlohn_bundesland2() throws RemoteException {
+		setUpCase2();
+		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
+		tearDown();	
+	}
+	/**
+	 * Testet, ob erwarteter und tatsächlicher Wert für den Stundenlohn übereinstimmen
+	 * @throws RemoteException
+	 */
+	public void teststundenlohn_bundesland3() throws RemoteException {
+		setUpCase3();
 		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
 		tearDown();	
 	}

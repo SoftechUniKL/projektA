@@ -40,14 +40,12 @@ public class Renovierung {
 	Swing_View view2;
 	Wohnung w2;
 	
-	
 	Renovierung(Swing_View view2) {
 		this.view2 = view2;
 	}
 	Renovierung(Wohnung w2) {
 		this.w2 = w2;
 	}
-	
 	
 	/**
 	 * setzt die Variable <b>farbpreis</b> auf einen bestimmten Wert

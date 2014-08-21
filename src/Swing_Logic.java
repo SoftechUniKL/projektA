@@ -2,7 +2,6 @@ package malerarbeit;
 
 public class Swing_Logic {
 
-
 	public static void main(String[] args){
 		new Swing_View();
 		Swing_View Window = new Swing_View();
