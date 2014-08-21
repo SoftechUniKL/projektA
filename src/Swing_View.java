@@ -418,7 +418,7 @@ public class Swing_View extends JFrame{
 			}
 		});
 		latex_seidenglanz.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent dispersion) {
+			public void actionPerformed(ActionEvent seidenglanz) {
 				
 				try{	
 
@@ -438,7 +438,7 @@ public class Swing_View extends JFrame{
 			}
 		});
 		schadstofffarbe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent dispersion) {
+			public void actionPerformed(ActionEvent schadstofffarbe) {
 				
 				try{	
 
@@ -596,6 +596,15 @@ public class Swing_View extends JFrame{
 	public void setStundenlohn(double stundenlohn) {
 		tf_stundenlohn.setText(Double.toString(stundenlohn));
 	}
+	/**
+	 * schreibt den Studenlohn(String) der Maler in das Textfeld <b> tf_stundenlohn </b>	
+	 * @param stundenlohn = Stundenlohn der Maler
+	 * <p>
+	 * hängt ab von {@link Renovierung.stundenlohnBundesland}
+	 */
+	public void setStundenlohnString(String stundenlohn) {
+		tf_stundenlohn.setText(stundenlohn);
+	}
 	/**	
 	 * @return Ausgabe des Inhalts des Textfelds <b> tf_stundenlohn </b>
 	 */
@@ -617,7 +626,7 @@ public class Swing_View extends JFrame{
 		tf_farbpreisproliter.setText(Double.toString(farbpreis));
 	}
 	/**	
-	* @return Ausgabe des Inhalts des Textfelds <b> tf_farbpreisproliter </b>
+	* @return Ausgabe des Inhalts des Textfelds <b>tf_farbpreisproliter</b>
 	*/
 	public String getPreisProLiter(){
 		return tf_farbpreisproliter.getText();
@@ -662,7 +671,7 @@ public class Swing_View extends JFrame{
 	}
 	
 	/**	
-	 * @return Ausgabe des Inhalts Textfelds <b> tf_flaeche </b>
+	 * @return Ausgabe des Inhalts Textfelds <b> tf_quadratmeter </b>
 	 */	
 	public String getSquaremeter(){
 		return tf_quadratmeter.getText();

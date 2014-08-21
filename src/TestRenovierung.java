@@ -84,13 +84,11 @@ public class TestRenovierung extends TestCase {
 	}
 	
 	 /**
-	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung zu schaffen
+	  * Initialisierung der Instanzvariablen (Klassenvariablen), um eine definierte Testumgebung für einen Spezialfall zu schaffen (kein Element der ComboBox ausgewählt)
 	  */
 	protected void setUpSpecialCase() throws RemoteException {
-		swing.setIndexBundesland(20);
+		swing.setIndexBundesland(-1); //kein Element ausgewählt
 		renovierung.stundenlohnBundesland();
-		stundenlohn_expected = 30.04;
-		stundenlohn_actual = Double.parseDouble(swing.getStundenlohn());
 	}
 	
 	 /**
@@ -163,13 +161,12 @@ public class TestRenovierung extends TestCase {
 	 * Testet, ob erwarteter und tatsächlicher Wert für den Stundenlohn übereinstimmen
 	 * @throws RemoteException
 	 */
-	/*
 	public void teststundenlohn_bundeslandSpecial() throws RemoteException {
 		setUpSpecialCase();
-		assertEquals(stundenlohn_actual, stundenlohn_expected, 0.001);
+		assertEquals(swing.getStundenlohn(), "Bitte auswählen");
 		tearDown();	
 	}
-	*/
+	
 	/**
 	 * Testet, ob erwarteter und tatsächlicher Wert für die Gesamtkosten der Renovierung übereinstimmen
 	 * @throws RemoteException

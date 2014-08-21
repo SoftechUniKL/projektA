@@ -83,6 +83,9 @@ public class Renovierung {
 		
 		switch (swing_view.getIndexBundesland()) {
 
+		case 0:	
+		case -1:	swing_view.setStundenlohnString("Bitte auswählen");
+		break;
 		case 1:		swing_view.setStundenlohn(Baden_Wuerttemberg);
 		break;
 		case 2:		swing_view.setStundenlohn(Bayern); 
@@ -115,9 +118,10 @@ public class Renovierung {
 		break;
 		case 16:	swing_view.setStundenlohn(Thueringen);
 		break;
-		default: 	swing_view.setStundenlohn(-1);
+		default: 	swing_view.setStundenlohn(-1.0);
 		}
 	}
+	
 	
 	/**
 	 * setzt die Variable <b>deckkraft</b> auf einen bestimmten Wert
@@ -139,23 +143,18 @@ public class Renovierung {
 	 * bewirkt, dass der Wert für die Deckkraft auf 8.0 gesetzt wird
 	 *
 	 */
-	
 	public void deckkraftDispersionsfarbe() {
 		setDeckkraft(deckkraft_dispersionsfarbe);	
 	}
-	
 	/**
 	 * bewirkt, dass der Wert für die Deckkraft auf 7.0 gesetzt wird 
 	 */
-	
 	public void deckkraftSeidenglanz() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
-	
 	/**
 	 * bewirkt, dass der Wert für die Deckkraft auf 6.0 gesetzt wird 
 	 */
-	
 	public void deckkraftSchadstofffarbe() {
 		setDeckkraft(deckkraft_seidenglanz);
 	}
@@ -183,7 +182,6 @@ public class Renovierung {
 		abdeckungskosten = Math.round(100.0 * this.materialkosten_abdeckung * this.sqrmt) / 100.0;
 		swing_view.setAbdeckungskosten(abdeckungskosten);
 	}
-	
 	/**
 	 * setzt die Variable <b>sqrmt</b> auf einen bestimmten Wert
 	 * @param sqrmt = Quadratmeteranzahl der Wohnung
@@ -191,7 +189,6 @@ public class Renovierung {
 	public void setQuadratmeter(double sqrmt){
 		this.sqrmt = sqrmt;
 	}
-	
 	/**
 	 * setzt die Variable <b>materialkosten_abdeckung</b> auf einen bestimmten Wert
 	 * @param materialkosten_abdeckung = Materialkosten für die Abdeckung
@@ -199,6 +196,8 @@ public class Renovierung {
 	public void setMaterialkosten(double materialkosten_abdeckung){
 		this.materialkosten_abdeckung = materialkosten_abdeckung;
 	}
+	
+	
 	
 	/**
 	 * setzt die Variable <b>endergebnis</b> auf einen bestimmten Wert
@@ -240,7 +239,8 @@ public class Renovierung {
 
 
 	/**
-	 * Aufruf der Methode {@link setFarbmenge} mit der insgesamt benötigten Farbe
+	 * Aufruf der Methode {@link setFarbmenge} mit der insgesamt benötigten Farbe<p>
+	 * benötigte Farbe = zu streichende Fläche / Deckkraft
 	 * @param deckkraft = Menge der Farbe in Litern
 	 */
 	public void benoetigteFarbe(double deckkraft){

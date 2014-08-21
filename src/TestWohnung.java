@@ -90,6 +90,8 @@ public class TestWohnung extends TestCase {
 		tearDown();	
 	}
 	
+	
+	
 	/**
 	 * Testet, ob erwarteter und tatsächlicher Wert für die zu streichende Fläche übereinstimmen
 	 * @throws RemoteException
@@ -99,7 +101,6 @@ public class TestWohnung extends TestCase {
 		assertEquals(flaeche_actual, flaeche_expected, 0.001);
 		tearDown();
 	}
-	
 	/**
 	 * Testet, ob erwarteter und tatsächlicher Wert für die zu streichende Fläche übereinstimmen
 	 * @throws RemoteException
@@ -118,6 +119,8 @@ public class TestWohnung extends TestCase {
 		assertEquals(flaeche_actual, flaeche_expected, 0.001);
 		tearDown();
 	}
+	
+	
 	
 	
 	/**
