@@ -38,14 +38,16 @@ public class Renovierung {
 	double sqrmt;
 	
 	Swing_View swing_view;
-	Wohnung w2;
+	Wohnung wohnung;
 	
-	Renovierung(Swing_View view2) {
-		this.swing_view = view2;
+	Renovierung(Swing_View swing_view) {
+		this.swing_view = swing_view;
 	}
-	Renovierung(Wohnung w2) {
-		this.w2 = w2;
+	
+	Renovierung(Wohnung wohnung) {
+		this.wohnung = wohnung;
 	}
+	
 	
 	/**
 	 * setzt die Variable <b>farbpreis</b> auf einen bestimmten Wert
@@ -118,7 +120,6 @@ public class Renovierung {
 		break;
 		case 16:	swing_view.setStundenlohn(Thueringen);
 		break;
-		default: 	swing_view.setStundenlohn(-1.0);
 		}
 	}
 	

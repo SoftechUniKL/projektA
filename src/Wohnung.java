@@ -7,10 +7,10 @@ public class Wohnung {
 	double sqrmt; 
 	double hoehe; 
 
-	Swing_View view1;
+	Swing_View swing_view;
 
-	Wohnung (Swing_View view1){
-		this.view1 = view1;
+	Wohnung (Swing_View view){
+		this.swing_view = view;
 	}
 
 	/**
@@ -64,10 +64,10 @@ public class Wohnung {
 		if (isPositive(this.sqrmt) && isPositive(this.anzahl_raeume) && isPositive(this.hoehe)){
 			
 		zu_streichende_flaeche = Math.round(100.0 * (Math.sqrt(this.sqrmt/this.anzahl_raeume) * this.hoehe * 4 * this.anzahl_raeume)) / 100.0;
-		view1.setZuStreichendeFlaeche(zu_streichende_flaeche);
+		swing_view.setZuStreichendeFlaeche(zu_streichende_flaeche);
 		}
 		
-		else view1.setZuStreichendeFlaeche(-1);
+		else swing_view.setZuStreichendeFlaeche(-1);
 	}
 
 	/** 
@@ -75,7 +75,7 @@ public class Wohnung {
 	 */
 	public void addDeckenflaeche(){
 		zu_streichende_flaeche += this.sqrmt;
-		view1.setZuStreichendeFlaeche(Math.round(100.0 * zu_streichende_flaeche) / 100.0);
+		swing_view.setZuStreichendeFlaeche(Math.round(100.0 * zu_streichende_flaeche) / 100.0);
 	}
 
 	public boolean isPositive(double d) {

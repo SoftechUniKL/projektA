@@ -23,7 +23,7 @@ import javax.swing.event.ListSelectionListener;
 public class Swing_View extends JFrame{
 
 	Renovierung renovierung = new Renovierung(this);
-	Wohnung wohn = new Wohnung(this);
+	Wohnung wohnung = new Wohnung(this);
 
 	private static final long serialVersionUID = 1L; // Kompatibilität mit aktueller Version der Klasse
 
@@ -67,7 +67,7 @@ public class Swing_View extends JFrame{
 	public Swing_View() {
 	
 		setTitle("Malerkosten");
-		getContentPane().setLayout(null);
+		setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		allgemeines();
@@ -177,16 +177,16 @@ public class Swing_View extends JFrame{
 					
 					try{
 						
-						if (positive(tf_quadratmeter.getText()) == true && positive(tf_hoehe.getText()) == true) {	
+						if (positive(getSquaremeter()) == true && positive(tf_hoehe.getText()) == true) {	
 
 
 							if(str.equals(i + " Zimmer")){
-								wohn.setAnzahlRaeume(i);
-								wohn.setHoehe(Double.parseDouble(tf_hoehe.getText()));
-								wohn.setQuadratmeter(Double.parseDouble(tf_quadratmeter.getText()));
-								wohn.zuStreichendeFlaeche();
+								wohnung.setAnzahlRaeume(i);
+								wohnung.setHoehe(Double.parseDouble(tf_hoehe.getText()));
+								wohnung.setQuadratmeter(Double.parseDouble(tf_quadratmeter.getText()));
+								wohnung.zuStreichendeFlaeche();
 								if(decke_streichen.isSelected()){
-									wohn.addDeckenflaeche();
+									wohnung.addDeckenflaeche();
 								}
 							}
 						}
